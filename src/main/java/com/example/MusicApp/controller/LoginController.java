@@ -1,7 +1,6 @@
 package com.example.MusicApp.controller;
 
 import com.example.MusicApp.service.UserService;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
