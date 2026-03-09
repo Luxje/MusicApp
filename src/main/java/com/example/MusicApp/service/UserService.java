@@ -1,0 +1,28 @@
+package com.example.MusicApp.service;
+
+import com.example.MusicApp.entity.Users;
+import com.example.MusicApp.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+
+    @Autowired
+    UserRepository userRepository;
+
+    public Boolean validateLogin(String email, String password) {
+        Users user = userRepository.findByEmail(email);
+        if (user != null) {
+            if (user.getPassword().equals(password)) {
+                return true;
+            }
+        }else {
+            return false;
+        }
+        return null;
+    }
+
+
+
+}

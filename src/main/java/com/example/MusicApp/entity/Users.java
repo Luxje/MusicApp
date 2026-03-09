@@ -27,7 +27,6 @@ public class Users {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "SubscriptionPlanID", referencedColumnName = "UserID")
+    @JoinColumn(name = "SubscriptionPlanID")
     private SubscriptionPlan subscriptionPlan;
-
 }

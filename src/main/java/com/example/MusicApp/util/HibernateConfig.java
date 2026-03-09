@@ -1,5 +1,6 @@
 package com.example.MusicApp.util;
 
+import com.example.MusicApp.entity.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -22,10 +23,12 @@ public class HibernateConfig {
         properties.put(Environment.USER, "sa");
         properties.put(Environment.PASS, "123456789");
         properties.put(Environment.SHOW_SQL, "true");
-//
-//         conf.addAnnotatedClass(LopHoc.class);
-//         conf.addAnnotatedClass(HocSinh.class);
-//         conf.addAnnotatedClass(GiangVien.class);
+
+         conf.addAnnotatedClass(Album.class);
+         conf.addAnnotatedClass(Artist.class);
+         conf.addAnnotatedClass(Track.class);
+         conf.addAnnotatedClass(Users.class);
+         conf.addAnnotatedClass(SubscriptionPlan.class);
         conf.setProperties(properties);
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();

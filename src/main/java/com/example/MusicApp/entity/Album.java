@@ -29,6 +29,6 @@ public class Album {
     private Date releaseDate;
 
     @ManyToOne
-    @JoinColumn(name = "ArtistID", referencedColumnName = "albumId")
+    @JoinColumn(name = "ArtistID")
     private Artist artist;
 }
