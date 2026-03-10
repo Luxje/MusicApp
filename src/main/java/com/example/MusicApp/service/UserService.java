@@ -23,6 +23,14 @@ public class UserService {
         return null;
     }
 
+    public String getTenByEmail(String email) {
+        Users user = userRepository.findByEmail(email);
+        if (user != null) {
+            return user.getUsername();
+        }else {
+            return null;
+        }
+    }
 
 
 }
