@@ -11,29 +11,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/loginController")
 public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @GetMapping("/directLogin")
+    public String directLogin() {
+        return "Login";
+    }
 
     @PostMapping("/handleLogin")
     public String handleLogin(HttpServletRequest req, HttpServletResponse res, HttpSession session) {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         if (userService.validateLogin(email, password)) {
-            session.setAttribute("user", email);
+            session.setAttribute("email", email);
             session.setAttribute("message", "Login Successful");
-            return "MainPage";
+            return "redirect:/mainController/mainPage";
         }else {
             session.setAttribute("message", "Login Failed");
-            return "redirect:/login/directLogin";
+            return "Login";
         }
     }
 
-
-    @GetMapping("/directLogin")
-    public String directLogin(HttpServletRequest req, HttpServletResponse res) {
-        return "Login";
-    }
 }
