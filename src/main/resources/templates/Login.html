@@ -6,20 +6,34 @@
     <title>Login Page</title>
     <link rel="stylesheet" th:href="@{/Login.css}"></head>
 <body>
-<div class="login-container">
-    <form action="/loginController/handleLogin" method="POST">
-        <h2>Login</h2>
-        <div class="input-group">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email" required placeholder="Enter Email">
-        </div>
-        <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required placeholder="Enter Password">
-        </div>
-        <button type="submit" class="login-btn">Login</button>
-        <p class="footer-text">Forgot password? <a href="#">Click here</a></p>
-    </form>
+<!-- From Uiverse.io by andrew-demchenk0 -->
+<div class="wrapper">
+    <div class="card-switch">
+        <label class="switch">
+            <input type="checkbox" class="toggle">
+            <span class="slider"></span>
+            <span class="card-side"></span>
+            <div class="flip-card__inner">
+                <div class="flip-card__front">
+                    <div class="title">Log in</div>
+                    <form class="flip-card__form" action="">
+                        <input class="flip-card__input" name="email" placeholder="Email" type="email">
+                        <input class="flip-card__input" name="password" placeholder="Password" type="password">
+                        <button class="flip-card__btn">Let`s go!</button>
+                    </form>
+                </div>
+                <div class="flip-card__back">
+                    <div class="title">Sign up</div>
+                    <form class="flip-card__form" action="">
+                        <input class="flip-card__input" placeholder="Name" type="name">
+                        <input class="flip-card__input" name="email" placeholder="Email" type="email">
+                        <input class="flip-card__input" name="password" placeholder="Password" type="password">
+                        <button class="flip-card__btn">Confirm!</button>
+                    </form>
+                </div>
+            </div>
+        </label>
+    </div>
 </div>
 </body>
 </html>
