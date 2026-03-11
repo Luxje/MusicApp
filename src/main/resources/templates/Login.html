@@ -6,6 +6,10 @@
     <title>Login Page</title>
     <link rel="stylesheet" th:href="@{/Login.css}"></head>
 <body>
+
+
+
+<form action="/loginController/login" method="post">
 <div class="wrapper">
     <div class="card-switch">
         <label class="switch">
@@ -14,7 +18,7 @@
             <span class="card-side"></span>
             <div class="flip-card__inner">
                 <div class="flip-card__front">
-                    <div class="title">Log in</div>
+                    <div class="title">Login</div>
                     <form class="flip-card__form" action="">
                         <input class="flip-card__input" name="email" placeholder="Email" type="email">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">
@@ -24,9 +28,9 @@
                 <div class="flip-card__back">
                     <div class="title">Sign up</div>
                     <form class="flip-card__form" action="">
-                        <input class="flip-card__input" placeholder="Name" type="name">
-                        <input class="flip-card__input" name="email" placeholder="Email" type="email">
-                        <input class="flip-card__input" name="password" placeholder="Password" type="password">
+                        <input class="flip-card__input" name="signupUsername" placeholder="Username" type="text">
+                        <input class="flip-card__input" name="signupEmail" placeholder="Email" type="email">
+                        <input class="flip-card__input" name="signupPassword" placeholder="Password" type="password">
                         <button class="flip-card__btn">Confirm!</button>
                     </form>
                 </div>
@@ -34,5 +38,6 @@
         </label>
     </div>
 </div>
+</form>
 </body>
 </html>

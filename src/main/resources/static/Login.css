@@ -5,6 +5,10 @@ body {
     min-height: 100vh;
     margin: 0;
     background-color: #f4f4f9;
+    background-image: url("Wonderful-Black-And-White-Wallpaper.jpg");
+    background-size: cover ;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .wrapper {
