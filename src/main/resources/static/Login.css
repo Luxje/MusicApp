@@ -17,7 +17,7 @@ body {
 }
 
 .switch {
-    transform: translateY(-200px); /* Add this line back! */
+    transform: translateY(-200px);
     position: relative;
     display: flex;
     flex-direction: column;
