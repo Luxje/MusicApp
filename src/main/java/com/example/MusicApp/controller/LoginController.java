@@ -36,6 +36,13 @@ public class LoginController {
         }
     }
 
+    @PostMapping("/register")
+    public String handleRegister(HttpServletRequest req, HttpServletResponse res, HttpSession session, Model model) {
+        String email = req.getParameter("signupUsername");
+        String password = req.getParameter("signupPassword");
+
+    }
+
 
 
 }
