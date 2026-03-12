@@ -1,5 +1,6 @@
 package com.example.MusicApp.service;
 
+import com.example.MusicApp.entity.SubscriptionPlan;
 import com.example.MusicApp.entity.Users;
 import com.example.MusicApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,11 @@ public class UserService {
         }else {
             return null;
         }
+    }
+
+    public Boolean validateRegister(String username, String email, String password, SubscriptionPlan subscriptionPlan) {
+        Users user = new Users(null, username, email, password, subscriptionPlan );
+        userRepository.save(user);
     }
 
 
