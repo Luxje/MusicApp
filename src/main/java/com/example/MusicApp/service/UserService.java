@@ -41,14 +41,17 @@ public class UserService {
     public Boolean validateRegister(String username, String email, String password, Integer subscriptionPlanId) {
         boolean validateEmail = email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
         if (!validateEmail) {
+            System.out.println("sai dinh dang email");
             return false;
         }
             Users exitUser = userRepository.findByEmail(email);
         if (exitUser != null) {
+            System.out.println("da ton tai");
             return false;
         }
                 SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findBySubscriptionPlanID(subscriptionPlanId);
                 userRepository.save(new Users(null, username, email, password, subscriptionPlan));
+                System.out.println("thanh cong");
                 return true;
         }
 

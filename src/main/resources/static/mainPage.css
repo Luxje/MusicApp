@@ -1,3 +1,4 @@
+/* ===== Reset & Base ===== */
 * {
     margin: 0;
     padding: 0;
@@ -9,197 +10,134 @@ body {
     background-color: #111;
     color: #fff;
     line-height: 1.5;
-    padding-left: 130px;
-    padding-right: 130px;
-    background-image: url("Wonderful-Black-And-White-Wallpaper.jpg");
+    /* REMOVED: Fixed 130px padding (this kills small screens) */
+    /*background-image: url("motcaichettruyenthong.jpg");*/
     background-size: cover;
-    background-repeat: no-repeat ;
+    background-repeat: no-repeat;
     background-position: center;
+    background-attachment: fixed; /* Keeps background still while scrolling */
+    min-height: 100vh;
+}
+
+/* ===== Global Container ===== */
+/* This is the magic part: it centers your content and prevents it from
+   stretching too wide on big monitors or touching edges on small ones */
+.container {
+    width: 95%;           /* Use 95% of the screen width */
+    max-width: 1400px;    /* Never go wider than 1400px */
+    margin: 0 auto;       /* Center the whole site */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* ===== Header ===== */
 header {
     display: flex;
     align-items: center;
-    background: #000;
-    padding: 12px 20px;
-    gap: 100px;
+    justify-content: space-between; /* Spreads logo, nav, search evenly */
+    background: rgba(0, 0, 0, 0.9); /* Slight transparency looks better */
+    padding: 15px 20px;
+    gap: 20px; /* Reduced gap for flexibility */
     width: 100%;
 }
 
 header .logo {
     font-size: 22px;
     font-weight: bold;
-    color: green;
+    color: #1DB954; /* Standard Spotify-ish Green */
+    white-space: nowrap; /* Prevents logo from breaking into 2 lines */
 }
 
 nav {
     display: flex;
-    gap: 18px;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-nav a:hover {
-    color: green;
+    gap: 15px;
 }
 
 .search-bar {
     flex: 1;
-    max-width: 550px;
+    max-width: 500px; /* Limits search bar width on huge screens */
 }
 
 .search-bar input {
     width: 100%;
-    padding: 8px 12px;
+    padding: 10px 15px;
     border-radius: 20px;
     border: none;
-    outline: none;
-    font-size: 14px;
-}
-
-header .pro-link {
-    color: #ff5500;
-    font-weight: bold;
-    text-decoration: none;
+    background: #222;
+    color: white;
 }
 
 /* ===== Main layout ===== */
 main {
     display: flex;
+    flex-wrap: wrap; /* Allows sections to stack on small screens */
+    padding: 30px 0;
+    gap: 30px;
+}
+
+.content {
+    flex: 3; /* Content takes 75% of space */
+    min-width: 300px;
+}
+
+.main { /* This is your Bisque/Player sidebar in the HTML */
+    flex: 1; /* Sidebar takes 25% of space */
+    min-width: 300px;
+    background-color: bisque;
+    color: #333;
     padding: 20px;
+    border-radius: 12px;
+    height: fit-content;
+}
+
+/* ===== Stations (The Grid) ===== */
+/* Instead of display:flex, we use Grid for perfect resolution scaling */
+.stations1, .stations2 {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 20px;
-    background-color: white ;
-}
-
-.content img {
-    width: 170px;
-    border-radius: 8px;
-}
-
-
-
-.content .station{
-    margin: 15px;
-    width: 200px;
-    color: white;
-}
-
-
-
-.sidebar {
-    flex: 1;
-}
-
-h2 {
-    margin: 20px 0 10px;
-    font-size: 18px;
-    font-weight: bold;
-    padding-left: 10px;
-}
-
-/* ===== Cards ===== */
-.card-container {
-    display: flex;
-    gap: 20px;
-}
-
-.card {
-    background: #1a1a1a;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    flex: 1;
-    transition: transform 0.2s, background 0.2s;
-    cursor: pointer;
-}
-.card:hover {
-    background: #222;
-    transform: translateY(-3px);
-}
-
-/* ===== Stations ===== */
-.stations {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    padding-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 30px;
 }
 
 .station {
-    background: #222;
-    padding: 15px;
-    border-radius: 10px;
-    width: 150px;
-    text-align: center;
-    flex-shrink: 0;
-    transition: background 0.2s;
-    cursor: pointer;
-}
-.station:hover {
-    background: #333;
-}
-
-/* ===== Sidebar ===== */
-.listening-history {
-    margin-top: 20px;
-}
-
-.history-item {
-    background: #1a1a1a;
+    background: rgba(255, 255, 255, 0.1);
     padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    transition: background 0.2s;
-    cursor: pointer;
-}
-.history-item:hover {
-    background: #222;
-}
-
-/* ===== Player ===== */
-footer.player {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #000;
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid #333;
-}
-
-.player-controls {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.player-controls button {
-    background: none;
-    border: none;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
     color: white;
-    font-size: 18px;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-.player-controls button:hover {
-    color: #ff5500;
+    transition: transform 0.2s, background 0.2s;
 }
 
-.timeline {
-    font-size: 14px;
-    color: #ccc;
+.station:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
 }
 
-.volume {
-    font-size: 18px;
-    cursor: pointer;
+.station img {
+    width: 100%; /* Image fills the station card */
+    height: auto;
+    aspect-ratio: 1/1; /* Keeps images perfectly square */
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* ===== Responsive Tweaks ===== */
+@media (max-width: 1024px) {
+    header {
+        flex-wrap: wrap; /* Wraps search bar below nav on smaller desktops */
+    }
+    .search-bar {
+        order: 3;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column; /* Stacks sidebar below content on tablets/small laptops */
+    }
 }

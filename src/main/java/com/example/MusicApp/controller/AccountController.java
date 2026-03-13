@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/accountController")
+@RequestMapping("/account")
 public class AccountController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping("/directLogin")
+    @GetMapping("/login")
     public String directLogin() {
         return "Login";
     }
@@ -52,10 +52,10 @@ public class AccountController {
 
         if (result) {
             model.addAttribute("message", "Registration Successful");
-            return "Login";
+            return "redirect:/account/login";
         }else {
             model.addAttribute("message", "Registration Failed");
-            return "redirect:/accountController/directRegister";
+            return "Register";
         }
 
     }
