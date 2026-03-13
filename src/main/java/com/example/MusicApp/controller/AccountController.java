@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/loginController")
-public class LoginController {
+@RequestMapping("/accountController")
+public class AccountController {
 
     @Autowired
     UserService userService;
@@ -34,5 +34,29 @@ public class LoginController {
             model.addAttribute("message", "Invalid email or password");
             return "Login";
         }
+    }
+
+
+    @GetMapping("/directRegister")
+    public String directRegister() {
+        return "Register";
+    }
+
+
+    @PostMapping("/register")
+    public String handleRegister(HttpServletRequest req, HttpServletResponse res, HttpSession session, Model model) {
+        String email = req.getParameter("signupEmail");
+        String password = req.getParameter("signupPassword");
+        String username = req.getParameter("signupUsername");
+        Boolean result = userService.validateRegister(username, email, password, 1);
+
+        if (result) {
+            model.addAttribute("message", "Registration Successful");
+            return "Login";
+        }else {
+            model.addAttribute("message", "Registration Failed");
+            return "redirect:/accountController/directRegister";
+        }
+
     }
 }
