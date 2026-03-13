@@ -2,6 +2,7 @@ package com.example.MusicApp.service;
 
 import com.example.MusicApp.entity.SubscriptionPlan;
 import com.example.MusicApp.entity.Users;
+import com.example.MusicApp.repository.SubscriptionPlanRepository;
 import com.example.MusicApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,10 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    SubscriptionPlanRepository subscriptionPlanRepository;
+
 
     public Boolean validateLogin(String email, String password) {
         Users user = userRepository.findByEmail(email);
@@ -33,10 +38,21 @@ public class UserService {
         }
     }
 
-    public Boolean validateRegister(String username, String email, String password, SubscriptionPlan subscriptionPlan) {
-        Users user = new Users(null, username, email, password, subscriptionPlan );
-        userRepository.save(user);
+    public Boolean validateRegister(String username, String email, String password, Integer subscriptionPlanId) {
+        boolean validateEmail = email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+        if (!validateEmail) {
+            return false;
+        }
+            Users exitUser = userRepository.findByEmail(email);
+        if (exitUser != null) {
+            return false;
+        }
+                SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findBySubscriptionPlanID(subscriptionPlanId);
+                userRepository.save(new Users(null, username, email, password, subscriptionPlan));
+                return true;
+        }
+
+
     }
 
 
-}

@@ -6,9 +6,10 @@ body {
     margin: 0;
     background-color: #f4f4f9;
     background-image: url("Wonderful-Black-And-White-Wallpaper.jpg");
-    background-size: cover ;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    font-family: sans-serif;
 }
 
 .wrapper {
@@ -16,65 +17,38 @@ body {
     --font-color: #323232;
     --font-color-sub: #666;
     --bg-color: #fff;
-    --bg-color-alt: #666;
     --main-color: #323232;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
-
-
-.card-side::before {
-    position: absolute;
-    content: 'Log in';
-    left: -70px;
-    top: 0;
-    width: 100px;
-    text-decoration: underline;
-    color: var(--font-color);
-    font-weight: 600;
-}
-
-
-.toggle {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-
 
 .flip-card__inner {
-    width: 300px;
-    height: 350px;
+    width: 350px;
     position: relative;
     background-color: transparent;
     perspective: 1000px;
     text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
 }
 
-
-.flip-card__front  {
-    padding: 20px;
-    position: absolute;
+.flip-card__back {
+    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    background: lightgrey;
+    background: #e8e8e8;
     gap: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 2px solid var(--main-color);
     box-shadow: 4px 4px var(--main-color);
+    transform: rotateY(0deg);
 }
-
 
 .flip-card__form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
 .title {
@@ -86,8 +60,9 @@ body {
 }
 
 .flip-card__input {
-    width: 250px;
-    height: 40px;
+    width: 100%;
+    max-width: 280px;
+    height: 45px;
     border-radius: 5px;
     border: 2px solid var(--main-color);
     background-color: var(--bg-color);
@@ -95,34 +70,33 @@ body {
     font-size: 15px;
     font-weight: 600;
     color: var(--font-color);
-    padding: 5px 10px;
+    padding: 5px 15px;
     outline: none;
-}
-
-.flip-card__input::placeholder {
-    color: var(--font-color-sub);
-    opacity: 0.8;
+    box-sizing: border-box;
 }
 
 .flip-card__input:focus {
     border: 2px solid var(--input-focus);
-}
-
-.flip-card__btn:active, .button-confirm:active {
-    box-shadow: 0px 0px var(--main-color);
-    transform: translate(3px, 3px);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px var(--main-color);
 }
 
 .flip-card__btn {
-    margin: 20px 0 20px 0;
-    width: 120px;
-    height: 40px;
+    margin-top: 10px;
+    width: 150px;
+    height: 45px;
     border-radius: 5px;
     border: 2px solid var(--main-color);
     background-color: var(--bg-color);
     box-shadow: 4px 4px var(--main-color);
     font-size: 17px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--font-color);
     cursor: pointer;
+    transition: all 0.2s;
+}
+
+.flip-card__btn:active {
+    box-shadow: 0px 0px var(--main-color);
+    transform: translate(4px, 4px);
 }
