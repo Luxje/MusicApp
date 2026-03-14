@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="track : ${tracks}">
+        <td th:text="${track.title}">Track Title</td>
+        <td>
+            <button th:onclick="'playTrack(' + ${track.trackId} + ')'">
+                Play
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<audio id="globalPlayer" controls style="width: 100%; margin-top: 20px;">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    function playTrack(trackId) {
+        const player = document.getElementById('globalPlayer');
+        // Point the player to our Spring Boot streaming endpoint
+        player.src = '/api/tracks/stream/' + trackId;
+        player.play();
+    }
+</script>
+</body>
+</html>
