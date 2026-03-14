@@ -14,18 +14,37 @@ public class TrackService {
     TrackRepository trackRepository;
 
     public List<Track> getTrackByArtistName(String artistName) {
+
         List<Track> lstTrack = trackRepository.findByArtistName(artistName);
-        return lstTrack;
+        if (lstTrack.isEmpty()) {
+            System.out.println("No track found with name " + artistName);
+            return null;
+        }else {
+            return lstTrack;
+        }
     }
+
+
 
     public void addTrack(Track track) {
         trackRepository.save(track);
     }
 
+<<<<<<< Updated upstream
     public void deleteTrack(Integer trackId) {
         trackRepository.deleteById(trackId);
-    }
+=======
 
+
+    public Boolean removeTrack(Integer trackId) {
+        Boolean result = trackRepository.removeTrackByTrackId(trackId);
+        if (result) {
+            return true;
+        }else {
+            return false;
+        }
+>>>>>>> Stashed changes
+    }
 
 
 }

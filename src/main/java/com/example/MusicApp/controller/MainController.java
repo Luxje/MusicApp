@@ -20,21 +20,20 @@ import java.util.List;
 @RequestMapping("/mainController")
 public class MainController {
 
+    private final HttpServletRequest req;
+    private final HttpServletResponse resp;
+    private final UserService userService;
+    private final TrackService trackService;
+    private final ArtistService artistService;
 
-    @Autowired
-    HttpServletRequest req;
 
-    @Autowired
-    HttpServletResponse res;
-
-    @Autowired
-    TrackService trackService;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    ArtistService artistService;
+    public MainController(HttpServletRequest req, HttpServletResponse resp, UserService userService, TrackService trackService, ArtistService artistService) {
+        this.req = req;
+        this.resp = resp;
+        this.userService = userService;
+        this.trackService = trackService;
+        this.artistService = artistService;
+    }
 
     @GetMapping("/directMainPage")
     public String directMainPage(Model model) {
