@@ -10,4 +10,6 @@ public interface TrackRepository extends CrudRepository<Track, Integer> {
     public List<Track> findByArtistName(String artistName);
 
 
+    public Boolean removeTrackByTrackId(Integer trackId);
+
 }

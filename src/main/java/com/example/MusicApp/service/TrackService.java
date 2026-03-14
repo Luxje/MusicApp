@@ -22,8 +22,14 @@ public class TrackService {
         trackRepository.save(track);
     }
 
-    public void deleteTrack(Integer trackId) {
-        trackRepository.deleteById(trackId);
+    public Boolean removeTrack(Integer trackId) {
+        Boolean result = trackRepository.removeTrackByTrackId(trackId);
+        if (result) {
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
 
