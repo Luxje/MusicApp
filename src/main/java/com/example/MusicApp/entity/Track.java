@@ -43,7 +43,8 @@ public class Track {
     @Column(name = "AudioFileURL")
     private String audioFileURL;
 
-
+    @Column(name = "ImagePath")
+    private String imagePath;
 
 
 }

@@ -26,10 +26,15 @@
         <div class="content">
             <h2>Made for you</h2>
             <div class="stations1" style="display: flex;">
-                <a href="#" class="station"><img src="/loginbackground.jpg" alt="">Station Andiez</a>
-                <a href="#" class="station"><img src="/loginbackground.jpg" alt="">Station Andiez</a>
-                <a href="#" class="station"><img src="/loginbackground.jpg" alt="">Station Andiez</a>
-                <a href="#" class="station"><img src="/loginbackground.jpg" alt="">Station Andiez</a>
+                <a th:each="track : ${trackList}"
+                   href="javascript:void(0);"
+                   class="station"
+                   th:data-id="${track.trackId}"
+                   th:data-title="${track.title}"
+                   onclick="playFromData(this)">
+                    <img th:src="@{'/my-images/' + ${track.imagePath}}" alt="no image">
+                    <span th:text="${track.title}"></span>
+                </a>
             </div>
 
             <h2>Discover with Stations</h2>
@@ -41,8 +46,8 @@
             </div>
         </div>
 
-        <audio id="audio-player" th:src="${path}"></audio>
-
+<!--        <audio id="audio-player" th:src="${path}"></audio>-->
+        <audio id="audio-player"></audio>
         <div class="card">
             <div class="top">
                 <div class="pfp">
@@ -135,5 +140,6 @@
         audio.currentTime = (clickX / width) * duration;
     });
 </script>
+<script th:src="@{/js/player.js}"></script>
 </body>
 </html>

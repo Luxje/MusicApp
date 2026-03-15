@@ -59,10 +59,17 @@ public class MainController {
         String username = userService.getTenByEmail(email);
         String artistName = req.getParameter("artistName");
         model.addAttribute("username", username);
-        Track track = trackRepository.findTrackByTrackId(2);
+
+        model.addAttribute("trackList", trackRepository.findAll());
+
+
+
+
         req.setAttribute("lstArtist", artistService.getArtistByName(artistName));
         return "MainPage";
     }
+
+
 
 
 
