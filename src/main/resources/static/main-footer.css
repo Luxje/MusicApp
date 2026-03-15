@@ -1,123 +1,128 @@
-/* From Uiverse.io by Praashoo7 */
-.main {
-    background-color: white;
-    padding: 1em;
-    padding-bottom: 1.1em;
-    border-radius: 15px;
-    margin: 1em;
+/* ===== Main Bar Container ===== */
+.card {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    background: #191414;
+    border-top: 1px solid #282828;
+    padding: 0 20px;
+    display: flex;         /* Horizontal layout */
+    align-items: center;    /* Center items vertically */
+    justify-content: space-between; /* Space out Left, Center, and Right sections */
+    z-index: 9999;
+    box-sizing: border-box;
 }
 
-.loader {
+/* ===== Left Section: Song Info ===== */
+.top {
     display: flex;
-    flex-direction: row;
-    height: 4em;
-    padding-left: 1em;
-    padding-right: 1em;
-    transform: rotate(180deg);
-    justify-content: right;
-    border-radius: 10px;
-    transition: .4s ease-in-out;
+    align-items: center;
+    gap: 15px;
+    width: 30%; /* Limits song info width */
 }
 
-.loader:hover {
-    cursor: pointer;
-    background-color: lightgray;
-}
-
-.currentplaying {
+.pfp {
+    height: 56px;
+    width: 56px;
+    background-color: #d2d2d2;
+    border-radius: 4px;
     display: flex;
-    margin: 1em;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
 }
 
-.spotify {
-    width: 50px;
-    height: 50px;
-    margin-right: 0.6em;
-}
-
-.heading {
-    color: black;
-    font-size: 1.1em;
+.title-1 {
+    color: white;
+    font-size: 14px;
     font-weight: bold;
-    align-self: center;
+    margin: 0;
 }
 
-.loading {
+.title-2 {
+    color: #b3b3b3;
+    font-size: 11px;
+    margin: 0;
+}
+
+/* ===== Center Section: Controls & Progress ===== */
+.controls-container {
     display: flex;
-    margin-top: 1em;
-    margin-left: 0.3em;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    gap: 8px;
 }
 
-.load {
+.controls {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: static; /* Removed absolute positioning */
+}
+
+.time {
+    width: 100%;
+    background-color: #4d4d4d;
+    height: 4px;
+    border-radius: 2px;
+    position: relative; /* Container for the elapsed bar */
+    cursor: pointer;
+}
+
+.elapsed {
+    background-color: #1db954;
+    height: 100%;
+    border-radius: 2px;
+    width: 0%; /* Controlled by JS */
+    transition: width 0.1s linear;
+}
+
+/* ===== Right Section: Volume/Extra ===== */
+.volume-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 30%;
+}
+
+/* ===== Timestamps ===== */
+.timetext {
+    color: #b3b3b3;
+    font-size: 11px;
+    position: static; /* Let them sit beside the progress bar */
+}
+
+/* ===== Animations (Only active when playing) ===== */
+.playing {
+    display: flex;
+    gap: 2px;
+}
+
+.greenline {
+    background-color: #1db954;
     width: 2px;
-    height: 33px;
-    background-color: limegreen;
-    animation: 1s move6 infinite;
-    border-radius: 5px;
-    margin: 0.1em;
+    height: 15px;
+    transform-origin: bottom;
+    animation: none; /* Default to static */
 }
 
-.load:nth-child(1) {
-    animation-delay: 0.2s;
+/* Add this class via JS when playing */
+.is-playing .greenline {
+    animation: playing 1s ease-in-out infinite;
 }
 
-.load:nth-child(2) {
-    animation-delay: 0.4s;
+@keyframes playing {
+    0%, 100% { transform: scaleY(0.2); }
+    50% { transform: scaleY(1); }
 }
 
-.load:nth-child(3) {
-    animation-delay: 0.6s;
-}
-
-.play {
-    position: relative;
-    left: 0.35em;
-    height: 1.6em;
-    width: 1.6em;
-    clip-path: polygon(50% 50%, 100% 50%, 75% 6.6%);
-    background-color: black;
-    transform: rotate(-90deg);
-    align-self: center;
-    margin-top: 0.7em;
-    justify-self: center;
-}
-
-.albumcover {
-    position: relative;
-    margin-right: 1em;
-    height: 40px;
-    width: 40px;
-    background-color: rgb(233, 232, 232);
-    align-self: center;
-    border-radius: 5px;
-}
-
-.song {
-    position: relative;
-    transform: rotate(180deg);
-    margin-right: 1em;
-    color: black;
-    align-self: center;
-}
-
-.artist {
-    font-size: 0.6em;
-}
-
-@keyframes move6 {
-    0% {
-        height: 0.2em;
-    }
-
-    25% {
-        height: 0.7em;
-    }
-
-    50% {
-        height: 1.5em;
-    }
-
-    100% {
-        height: 0.2em;
-    }
+/* Hover effects for buttons */
+.controls svg:hover {
+    color: #1db954;
+    transform: scale(1.1);
 }

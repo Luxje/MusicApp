@@ -44,6 +44,7 @@ public class MainController {
         this.trackService = trackService;
         this.artistService = artistService;
         this.trackRepository = trackRepository;
+
     }
 
     @GetMapping("/directMainPage")
@@ -58,27 +59,12 @@ public class MainController {
         String username = userService.getTenByEmail(email);
         String artistName = req.getParameter("artistName");
         model.addAttribute("username", username);
+        Track track = trackRepository.findTrackByTrackId(2);
         req.setAttribute("lstArtist", artistService.getArtistByName(artistName));
         return "MainPage";
     }
 
 
-//    public void view(Model model, HttpSession session) {
-//        String username = req.getParameter("username");
-//        String artistName = req.getParameter("artistName");
-//    }
-
-
-//    @GetMapping("/stream/{id}")
-//    public ResponseEntity<Resource> streamTrack(@PathVariable int id) {
-//        Track track = trackRepository.findById(id).get();
-//        Path path = Paths.get(track.getAudioFileURL());
-//        Resource resource = new FileSystemResource(path);
-//
-//        return ResponseEntity.ok()
-//                .contentType(MediaType.parseMediaType("audio/mpeg"))
-//                .body(resource);
-//    }
 
 
 
