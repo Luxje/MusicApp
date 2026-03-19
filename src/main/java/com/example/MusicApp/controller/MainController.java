@@ -16,10 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -59,21 +56,18 @@ public class MainController {
         String username = userService.getTenByEmail(email);
         String artistName = req.getParameter("artistName");
         model.addAttribute("username", username);
-
         model.addAttribute("trackList", trackRepository.findAll());
-
-
-
-
         req.setAttribute("lstArtist", artistService.getArtistByName(artistName));
         return "MainPage";
     }
 
 
-
-
-
-
+    @PostMapping("/search")
+    public String search(@RequestParam("artistNameSearch") String artistName, Model model) {
+        List<Track> lstTrack = trackService.getTrackByArtistName(artistName);
+        model.addAttribute("trackList", lstTrack);
+        return "MainPage";
+    }
 
 
 

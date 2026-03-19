@@ -3,7 +3,6 @@ package com.example.MusicApp.service;
 import com.example.MusicApp.entity.Track;
 import com.example.MusicApp.repository.TrackRepository;
 import javazoom.jl.player.advanced.AdvancedPlayer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
@@ -81,6 +80,7 @@ public class TrackService {
 
         System.out.println("Playback stopped.");
     }
+
 
 
 }

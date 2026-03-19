@@ -3,7 +3,7 @@ package com.example.MusicApp;
 import java.util.Random;
 
 public class Logic {
-    public static void shuffleArray(int[] array) {
+    public void shuffleArray(int[] array) {
         Random random = new Random();
 
         // Start from the last element and swap one by one
