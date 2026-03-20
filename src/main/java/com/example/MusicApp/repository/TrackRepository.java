@@ -9,10 +9,7 @@ import java.util.List;
 public interface TrackRepository extends CrudRepository<Track, Integer> {
     public List<Track> findByArtistName(String artistName);
 
-    public Track findTrackByTitle(String title);
-
     public Track findTrackByTrackId(int id);
 
-    public List<Track> findAllByArtistName(String artistName);
-
+    public List<Track> findTracksByTitle(String title);
 }

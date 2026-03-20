@@ -15,9 +15,10 @@
             <a href="Feed.html">Feed</a>
             <a href="Libary.html">Library</a>
         </nav>
-        <div class="search-bar">
-            <input type="text" placeholder="Search">
-        </div>
+        <form class="search-bar" th:action="@{/mainController/search}" method="get">
+            <input type="text" placeholder="Search" name="searchInput" id="searchInput">
+            <button href="/mainController/search" type="submit">Search</button>
+        </form>
         <a href="#" class="pro-link">Binh phat nhac</a>
         <nav><a href="Login.html">Login</a></nav>
     </header>

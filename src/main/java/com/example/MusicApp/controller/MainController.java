@@ -62,9 +62,9 @@ public class MainController {
     }
 
 
-    @PostMapping("/search")
-    public String search(@RequestParam("artistNameSearch") String artistName, Model model) {
-        List<Track> lstTrack = trackService.getTrackByArtistName(artistName);
+    @GetMapping("/search")
+    public String search(Model model, @RequestParam("searchInput") String searchInput) {
+        List<Track> lstTrack = trackService.getTrackByTitle(searchInput);
         model.addAttribute("trackList", lstTrack);
         return "MainPage";
     }

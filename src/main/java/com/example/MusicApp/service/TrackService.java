@@ -32,6 +32,12 @@ public class TrackService {
     }
 
 
+    public List<Track> getTrackByTitle(String title) {
+        List<Track> lstTrack = trackRepository.findTracksByTitle(title);
+            return lstTrack;
+        }
+
+
     public void addTrack(Track track) {
         trackRepository.save(track);
     }
