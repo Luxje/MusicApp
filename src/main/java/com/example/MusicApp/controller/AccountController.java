@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/Account")
+
 public class AccountController {
 
     private final UserService userService;

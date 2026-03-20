@@ -23,7 +23,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
-@RequestMapping("/mainController")
+@RequestMapping("/Music")
 public class MainController {
 
     private final HttpServletRequest req;
@@ -44,14 +44,8 @@ public class MainController {
 
     }
 
-    @GetMapping("/directMainPage")
-    public String directMainPage(Model model) {
-        return "MainPage";
-    }
-
-
-    @GetMapping("/mainPage")
-    public String mainPage(HttpSession session, Model model) {
+    @GetMapping("/Home")
+    public String home(HttpSession session, Model model) {
         String email = (String) session.getAttribute("email");
         String username = userService.getTenByEmail(email);
         String artistName = req.getParameter("artistName");
@@ -62,7 +56,7 @@ public class MainController {
     }
 
 
-    @GetMapping("/search")
+    @GetMapping("/Search")
     public String search(Model model, @RequestParam("searchInput") String searchInput) {
         List<Track> lstTrack = trackService.getTrackByTitle(searchInput);
         model.addAttribute("trackList", lstTrack);
