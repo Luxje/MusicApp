@@ -2,27 +2,33 @@ package com.example.MusicApp.controller;
 
 import com.example.MusicApp.entity.Track;
 import com.example.MusicApp.repository.TrackRepository;
+import com.example.MusicApp.service.TrackService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
+import java.util.Objects;
 
 @RestController // Use RestController for streaming data/files
 @RequestMapping("/api/tracks")
 public class TrackController {
 
     private final TrackRepository trackRepository;
+    private final TrackService trackService;
 
-    public TrackController(TrackRepository trackRepository) {
+    public TrackController(TrackRepository trackRepository, TrackService trackService) {
         this.trackRepository = trackRepository;
+        this.trackService = trackService;
     }
 
     @GetMapping("/stream/{id}")
@@ -42,5 +48,41 @@ public class TrackController {
                 .body(resource);
     }
 
+
+    @GetMapping("/upload")
+    public String directUpload() {
+        return "Upload";
+    }
+
+    @PostMapping("/upload")
+    public String addTrack(@RequestPart("file") MultipartFile file, Model model, HttpServletRequest req) {
+        if (file.isEmpty()) {
+            model.addAttribute("message", "Please select a file");
+        }
+        try {
+            String trackUploadDir = "D:/Filenhac";
+            String imageUploadDir = "D:/PersonalProject/MusicApp/MusicApp/src/main/resources";
+            File uploadDirTrack = new File(trackUploadDir);
+            File uploadDirImage = new File(imageUploadDir);
+            if (!uploadDirTrack.exists() || !uploadDirImage.exists()) {
+              boolean mkdir = uploadDirTrack.mkdirs();
+            }
+            File saveTrackFile = new File(uploadDirTrack, Objects.requireNonNull(file.getOriginalFilename()));
+            File saveImageFile  = new File(uploadDirImage, Objects.requireNonNull(file.getOriginalFilename()));
+            String trackTitle = req.getParameter("title");
+            int duration = Integer.parseInt(req.getParameter("duration"));
+            Date releaseDate = (Date) req.getAttribute("releaseDate");
+            String filePath = saveTrackFile.getPath();
+            String imagePath = saveImageFile.getPath();
+//            Track track = new Track(null, trackTitle, duration, releaseDate, filePath, imagePath);
+            file.transferTo(saveTrackFile);
+            model.addAttribute("message", "Successfully uploaded ");
+
+            return "Upload";
+        }catch (Exception e) {
+            model.addAttribute("message", "Failed to upload file");
+        }
+            return "Upload";
+    }
 
 }

@@ -67,18 +67,19 @@ public class MainController {
         List<Track> lstTrack = trackService.getTrackByTitle(searchInput);
         List<Album> lstAlbum1 = albumService.findByArtistName(searchInput);
         List<Album> lstAlbum2 = albumService.findByAlbumTitle(searchInput);
+        if (lstTrack.isEmpty() && lstAlbum1.isEmpty() && lstAlbum2.isEmpty()) { // empty or not.
+            model.addAttribute("message", "No tracks or albums found");
+        }else {
         // merge lstAlbum1 into lstAlbum2.
-        lstAlbum1.addAll(lstAlbum2);
-        model.addAttribute("trackList", lstTrack);
-        model.addAttribute("albumList", lstAlbum1);
+            lstAlbum1.addAll(lstAlbum2);
+            model.addAttribute("trackList", lstTrack);
+            model.addAttribute("albumList", lstAlbum1);
+        }
         return "MainPage";
     }
 
 
-//    @GetMapping("/Feed")
-//    public String feed(Model model) {
-//
-//    }
+
 
 
 

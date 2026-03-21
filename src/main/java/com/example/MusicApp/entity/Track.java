@@ -18,7 +18,7 @@ public class Track {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TrackID") // Added this to match your SQL column name exactly
+    @Column(name = "TrackID")
     private int trackId;
 
     @Column(name = "Title")
