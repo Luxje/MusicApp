@@ -1,7 +1,10 @@
 package com.example.MusicApp.controller;
 
+import com.example.MusicApp.entity.Album;
 import com.example.MusicApp.entity.Track;
+import com.example.MusicApp.repository.AlbumRepository;
 import com.example.MusicApp.repository.TrackRepository;
+import com.example.MusicApp.service.AlbumService;
 import com.example.MusicApp.service.ArtistService;
 import com.example.MusicApp.service.TrackService;
 import com.example.MusicApp.service.UserService;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/Music")
@@ -32,9 +36,10 @@ public class MainController {
     private final TrackService trackService;
     private final ArtistService artistService;
     private final TrackRepository trackRepository;
+    private final AlbumService albumService;
 
 
-    public MainController(HttpServletRequest req, HttpServletResponse resp, UserService userService, TrackService trackService, ArtistService artistService, TrackRepository trackRepository) {
+    public MainController(HttpServletRequest req, HttpServletResponse resp, UserService userService, TrackService trackService, ArtistService artistService, TrackRepository trackRepository, AlbumService albumService) {
         this.req = req;
         this.resp = resp;
         this.userService = userService;
@@ -42,6 +47,7 @@ public class MainController {
         this.artistService = artistService;
         this.trackRepository = trackRepository;
 
+        this.albumService = albumService;
     }
 
     @GetMapping("/Home")
@@ -59,9 +65,20 @@ public class MainController {
     @GetMapping("/Search")
     public String search(Model model, @RequestParam("searchInput") String searchInput) {
         List<Track> lstTrack = trackService.getTrackByTitle(searchInput);
+        List<Album> lstAlbum1 = albumService.findByArtistName(searchInput);
+        List<Album> lstAlbum2 = albumService.findByAlbumTitle(searchInput);
+        // merge lstAlbum1 into lstAlbum2.
+        lstAlbum1.addAll(lstAlbum2);
         model.addAttribute("trackList", lstTrack);
+        model.addAttribute("albumList", lstAlbum1);
         return "MainPage";
     }
+
+
+//    @GetMapping("/Feed")
+//    public String feed(Model model) {
+//
+//    }
 
 
 
