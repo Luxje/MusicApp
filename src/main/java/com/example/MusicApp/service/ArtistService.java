@@ -18,7 +18,7 @@ public class ArtistService {
 
 
     public List<Artist> getArtistByName(String artistName) {
-       List<Artist> lstArtists =  artistRepository.findByName(artistName);
+       List<Artist> lstArtists =  artistRepository.findAllByName(artistName);
         return lstArtists;
     }
 

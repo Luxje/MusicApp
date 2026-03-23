@@ -12,12 +12,12 @@
             <div class="flip-card__inner">
                 <div class="flip-card__front">
                     <div class="title">Login</div>
-                    <form class="flip-card__form" th:action="@{/account/login}" method="post">
+                    <form class="flip-card__form" th:action="@{/Account/login}" method="post">
                         <input class="flip-card__input" name="email" placeholder="Email" type="email">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">
                         <button class="flip-card__btn">Login</button>
-                        <a href="/account/register"><button class="flip-card__btn">Register</button></a>
                     </form>
+                        <a th:href="@{/Account/directRegister}"><button class="flip-card__btn">Register</button></a>
                 </div>
             </div>
     </div>

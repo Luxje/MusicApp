@@ -1,18 +1,16 @@
 package com.example.MusicApp.controller;
 
+import com.example.MusicApp.entity.Users;
 import com.example.MusicApp.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/Account")
-
 public class AccountController {
 
     private final UserService userService;
@@ -27,12 +25,13 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public String handleLogin(HttpServletRequest req, HttpServletResponse res, HttpSession session, Model model) {
+    public String handleLogin(HttpServletRequest req, HttpSession session, Model model) {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         if (userService.validateLogin(email, password)) {
             session.setAttribute("email", email);
-            return "redirect:/mainController/mainPage";
+            session.setAttribute("username", userService.getTenByEmail(email));
+            return "redirect:/Music/Home";
         }else {
             model.addAttribute("message", "Invalid email or password");
             return "Login";
@@ -40,7 +39,7 @@ public class AccountController {
     }
 
 
-    @GetMapping("/directRegister")
+    @GetMapping("/register")
     public String directRegister() {
         return "Register";
     }
@@ -55,7 +54,7 @@ public class AccountController {
 
         if (result) {
             model.addAttribute("message", "Registration Successful");
-            return "redirect:/account/login";
+            return "redirect:/Account/login";
         }else {
             model.addAttribute("message", "Registration Failed");
             return "Register";
