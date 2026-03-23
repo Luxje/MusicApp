@@ -6,6 +6,7 @@ import com.example.MusicApp.entity.Track;
 import com.example.MusicApp.repository.AlbumRepository;
 import com.example.MusicApp.repository.ArtistRepository;
 import com.example.MusicApp.repository.TrackRepository;
+import com.example.MusicApp.util.DurationExtract;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -28,12 +29,13 @@ public class TrackService {
     private final TrackRepository trackRepository;
     private final AlbumRepository albumRepository;
     private final ArtistRepository artistRepository;
+    private final DurationExtract durationExtract;
 
-
-    public TrackService(TrackRepository trackRepository, AlbumRepository albumRepository, ArtistRepository artistRepository) {
+    public TrackService(TrackRepository trackRepository, AlbumRepository albumRepository, ArtistRepository artistRepository, DurationExtract durationExtract) {
         this.trackRepository = trackRepository;
         this.albumRepository = albumRepository;
         this.artistRepository = artistRepository;
+        this.durationExtract = durationExtract;
     }
 
     public List<Track> getTrackByArtistName(String artistName) {
@@ -54,7 +56,7 @@ public class TrackService {
         }
 
 
-    public boolean uploadTrack(MultipartFile file, Date releaseDate ,int duration, String trackTitle, String albumTitle, String username) {
+    public boolean uploadTrack(MultipartFile file, Date releaseDate, String trackTitle, String albumTitle, String username) {
         try {
             String trackUploadDir = "D:/Filenhac";
             String imageUploadDir = "D:/PersonalProject/MusicApp/MusicApp/src/main/resources";
@@ -70,7 +72,10 @@ public class TrackService {
             String imagePath = saveImageFile.getPath();
             Artist artist = artistRepository.findByName(username);
             Album album = albumRepository.findAlbumByTitle(albumTitle);
-            Track track = new Track(null, trackTitle, artist, album , duration, releaseDate, filePath, imagePath);
+
+            int durationInSecond = durationExtract.getDurationInSecond(file);
+
+            Track track = new Track(null, trackTitle, artist, album , durationInSecond, releaseDate, filePath, imagePath);
             file.transferTo(saveTrackFile);
             trackRepository.save(track);
             return true;

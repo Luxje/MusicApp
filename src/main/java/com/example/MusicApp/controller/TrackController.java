@@ -71,8 +71,17 @@ public class TrackController {
     }
 
     @PostMapping("/upload")
-    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req, @ModelAttribute("albumTitle") String albumTitle) {
-        if ()
+    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req,
+                           @RequestParam("albumTitle") String albumTitle, @RequestParam("releaseDate") Date releaseDate,
+                           @RequestParam("trackTitle") String trackTitle
+                           )
+    {
+        if (file.isEmpty()) {
+            model.addAttribute("message", "Please select a file");
+            return "upload";
+        }
+
+        if (trackService.uploadTrack(file, re))
 
     }
 }
