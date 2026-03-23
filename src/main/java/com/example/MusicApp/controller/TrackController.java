@@ -1,9 +1,12 @@
 package com.example.MusicApp.controller;
 
+import com.example.MusicApp.entity.Album;
 import com.example.MusicApp.entity.Artist;
 import com.example.MusicApp.entity.Track;
+import com.example.MusicApp.repository.AlbumRepository;
 import com.example.MusicApp.repository.ArtistRepository;
 import com.example.MusicApp.repository.TrackRepository;
+import com.example.MusicApp.service.AlbumService;
 import com.example.MusicApp.service.ArtistService;
 import com.example.MusicApp.service.TrackService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,17 +31,20 @@ import java.util.Objects;
 public class TrackController {
 
 
-
     private final TrackRepository trackRepository;
     private final TrackService trackService;
     private final ArtistService artistService;
     private final ArtistRepository artistRepository;
+    private final AlbumService albumService;
+    private final AlbumRepository albumRepository;
 
-    public TrackController(TrackRepository trackRepository, TrackService trackService, ArtistService artistService, ArtistRepository artistRepository) {
+    public TrackController(TrackRepository trackRepository, TrackService trackService, ArtistService artistService, ArtistRepository artistRepository, AlbumService albumService, AlbumRepository albumRepository) {
         this.trackRepository = trackRepository;
         this.trackService = trackService;
         this.artistService = artistService;
         this.artistRepository = artistRepository;
+        this.albumService = albumService;
+        this.albumRepository = albumRepository;
     }
 
     @GetMapping("/stream/{id}")
@@ -65,36 +71,8 @@ public class TrackController {
     }
 
     @PostMapping("/upload")
-    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req, @RequestParam("artistName") String artistName) {
-        if (file.isEmpty()) {
-            model.addAttribute("message", "Please select a file");
-        }
-        try {
-            String trackUploadDir = "D:/Filenhac";
-            String imageUploadDir = "D:/PersonalProject/MusicApp/MusicApp/src/main/resources";
-            File uploadDirTrack = new File(trackUploadDir);
-            File uploadDirImage = new File(imageUploadDir);
-            if (!uploadDirTrack.exists() || !uploadDirImage.exists()) {
-              boolean mkdir = uploadDirTrack.mkdirs();
-            }
-            File saveTrackFile = new File(uploadDirTrack, Objects.requireNonNull(file.getOriginalFilename()));
-            File saveImageFile  = new File(uploadDirImage, Objects.requireNonNull(file.getOriginalFilename()));
-            String trackTitle = req.getParameter("title");
-            int duration = Integer.parseInt(req.getParameter("duration"));
-            Date releaseDate = (Date) req.getAttribute("releaseDate");
-            String filePath = saveTrackFile.getPath();
-            String imagePath = saveImageFile.getPath();
-            String currentUsername = (String) session.getAttribute("username");
-            Artist artist = artistRepository.findByName(currentUsername);
+    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req, @ModelAttribute("albumTitle") String albumTitle) {
+        if ()
 
-            Track track = new Track(null, trackTitle, aritstId, 1 , duration, releaseDate, filePath, imagePath);
-            file.transferTo(saveTrackFile);
-            model.addAttribute("message", "Successfully uploaded ");
-            return "Upload";
-        }catch (Exception e) {
-            model.addAttribute("message", "Failed to upload file");
-        }
-            return "Upload";
     }
-
 }

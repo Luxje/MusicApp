@@ -10,4 +10,6 @@ public interface ArtistRepository extends CrudRepository<Artist, Integer> {
     public List<Artist> findAllByName(String name);
 
     public Artist findByName(String name);
+
+    public Artist (int id);
 }

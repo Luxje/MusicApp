@@ -27,7 +27,7 @@ public class AlbumService {
     }
 
     public List<Album> findByAlbumTitle(String albumTitle) {
-        List<Album> lstAlbum = albumRepository.findAlbumByTitle(albumTitle);
+        List<Album> lstAlbum = albumRepository.findAllByTitle(albumTitle);
         if (!lstAlbum.isEmpty()) {
             return lstAlbum;
         }else {
