@@ -1,8 +1,14 @@
 package com.example.MusicApp.service;
 
+import com.example.MusicApp.entity.Album;
+import com.example.MusicApp.entity.Artist;
 import com.example.MusicApp.entity.Track;
+import com.example.MusicApp.repository.AlbumRepository;
+import com.example.MusicApp.repository.ArtistRepository;
 import com.example.MusicApp.repository.TrackRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -20,10 +26,14 @@ public class TrackService {
     private AdvancedPlayer player;
     private Thread playerThread;
     private final TrackRepository trackRepository;
+    private final AlbumRepository albumRepository;
+    private final ArtistRepository artistRepository;
 
 
-    public TrackService(TrackRepository trackRepository) {
+    public TrackService(TrackRepository trackRepository, AlbumRepository albumRepository, ArtistRepository artistRepository) {
         this.trackRepository = trackRepository;
+        this.albumRepository = albumRepository;
+        this.artistRepository = artistRepository;
     }
 
     public List<Track> getTrackByArtistName(String artistName) {
@@ -44,10 +54,7 @@ public class TrackService {
         }
 
 
-    public void uploadTrack(MultipartFile file, Model model, HttpServletRequest req) {
-        if (file.isEmpty()) {
-            model.addAttribute("message", "Please select a file to upload");
-        }
+    public boolean uploadTrack(MultipartFile file, Date releaseDate ,int duration, String trackTitle, String albumTitle, String username) {
         try {
             String trackUploadDir = "D:/Filenhac";
             String imageUploadDir = "D:/PersonalProject/MusicApp/MusicApp/src/main/resources";
@@ -58,16 +65,18 @@ public class TrackService {
             }
             File saveTrackFile = new File(uploadDirTrack, Objects.requireNonNull(file.getOriginalFilename()));
             File saveImageFile  = new File(uploadDirImage, Objects.requireNonNull(file.getOriginalFilename()));
-            String trackTitle = req.getParameter("title");
-            int duration = Integer.parseInt(req.getParameter("duration"));
-            Date releaseDate = (Date) req.getAttribute("releaseDate");
+
             String filePath = saveTrackFile.getPath();
             String imagePath = saveImageFile.getPath();
-
+            Artist artist = artistRepository.findByName(username);
+            Album album = albumRepository.findAlbumByTitle(albumTitle);
+            Track track = new Track(null, trackTitle, artist, album , duration, releaseDate, filePath, imagePath);
+            file.transferTo(saveTrackFile);
+            trackRepository.save(track);
+            return true;
         }catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("message", "Upload failed");
-
+            return false;
         }
     }
 
