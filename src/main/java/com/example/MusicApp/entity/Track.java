@@ -19,7 +19,7 @@ public class Track {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TrackID")
-    private int trackId;
+    private Integer trackId;
 
     @Column(name = "Title")
     private String title;

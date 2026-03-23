@@ -15,11 +15,15 @@ import lombok.Setter;
 public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int artistId;
+    private Integer artistId;
 
     @Column(name = "Name")
     private String name;
 
     @Column(name = "Genre")
     private String genre;
+
+    @OneToOne
+    @JoinColumn(name = "UserID")
+    private Users user;
 }

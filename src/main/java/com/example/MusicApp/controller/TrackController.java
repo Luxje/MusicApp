@@ -1,9 +1,13 @@
 package com.example.MusicApp.controller;
 
+import com.example.MusicApp.entity.Artist;
 import com.example.MusicApp.entity.Track;
+import com.example.MusicApp.repository.ArtistRepository;
 import com.example.MusicApp.repository.TrackRepository;
+import com.example.MusicApp.service.ArtistService;
 import com.example.MusicApp.service.TrackService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -23,12 +27,18 @@ import java.util.Objects;
 @RequestMapping("/api/tracks")
 public class TrackController {
 
+
+
     private final TrackRepository trackRepository;
     private final TrackService trackService;
+    private final ArtistService artistService;
+    private final ArtistRepository artistRepository;
 
-    public TrackController(TrackRepository trackRepository, TrackService trackService) {
+    public TrackController(TrackRepository trackRepository, TrackService trackService, ArtistService artistService, ArtistRepository artistRepository) {
         this.trackRepository = trackRepository;
         this.trackService = trackService;
+        this.artistService = artistService;
+        this.artistRepository = artistRepository;
     }
 
     @GetMapping("/stream/{id}")
@@ -55,7 +65,7 @@ public class TrackController {
     }
 
     @PostMapping("/upload")
-    public String addTrack(@RequestPart("file") MultipartFile file, Model model, HttpServletRequest req) {
+    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req, @RequestParam("artistName") String artistName) {
         if (file.isEmpty()) {
             model.addAttribute("message", "Please select a file");
         }
@@ -74,10 +84,12 @@ public class TrackController {
             Date releaseDate = (Date) req.getAttribute("releaseDate");
             String filePath = saveTrackFile.getPath();
             String imagePath = saveImageFile.getPath();
-//            Track track = new Track(null, trackTitle, duration, releaseDate, filePath, imagePath);
+            String currentUsername = (String) session.getAttribute("username");
+            Artist artist = artistRepository.findByName(currentUsername);
+
+            Track track = new Track(null, trackTitle, aritstId, 1 , duration, releaseDate, filePath, imagePath);
             file.transferTo(saveTrackFile);
             model.addAttribute("message", "Successfully uploaded ");
-
             return "Upload";
         }catch (Exception e) {
             model.addAttribute("message", "Failed to upload file");
