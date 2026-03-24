@@ -7,16 +7,18 @@ import com.example.MusicApp.repository.AlbumRepository;
 import com.example.MusicApp.repository.ArtistRepository;
 import com.example.MusicApp.repository.TrackRepository;
 import com.example.MusicApp.util.DurationExtract;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -57,33 +59,37 @@ public class TrackService {
 
 
     public boolean uploadTrack(MultipartFile file, Date releaseDate, String trackTitle, String albumTitle, String username) {
-        try {
-            String trackUploadDir = "D:/Filenhac";
-            String imageUploadDir = "D:/PersonalProject/MusicApp/MusicApp/src/main/resources";
-            File uploadDirTrack = new File(trackUploadDir);
-            File uploadDirImage = new File(imageUploadDir);
-            if (!uploadDirTrack.exists() || !uploadDirImage.exists()) {
-                boolean mkdir = uploadDirTrack.mkdirs();
+            try {
+                Path trackDir = Paths.get("D:/Filenhac");
+                Path imageDir = Paths.get("D:/PersonalProject/MusicApp/Image"); // Better to keep them near each other
+
+                if (!Files.exists(trackDir)) Files.createDirectories(trackDir);
+                if (!Files.exists(imageDir)) Files.createDirectories(imageDir);
+
+                String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+                Path trackPath = trackDir.resolve(fileName);
+                Path imagePath = imageDir.resolve(fileName);
+
+                // Extract metadata
+                int durationInSecond = durationExtract.getDurationInSecond(file);
+                Artist artist = artistRepository.findByName(username);
+                Album album = albumRepository.findAlbumByTitle(albumTitle);
+
+                // Save the physical file
+                Files.copy(file.getInputStream(), trackPath, StandardCopyOption.REPLACE_EXISTING);
+
+                // Save to DB
+                Track track = new Track(null, trackTitle, artist, album, durationInSecond, releaseDate,
+                        trackPath.toString(), imagePath.toString());
+                trackRepository.save(track);
+
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
             }
-            File saveTrackFile = new File(uploadDirTrack, Objects.requireNonNull(file.getOriginalFilename()));
-            File saveImageFile  = new File(uploadDirImage, Objects.requireNonNull(file.getOriginalFilename()));
-
-            String filePath = saveTrackFile.getPath();
-            String imagePath = saveImageFile.getPath();
-            Artist artist = artistRepository.findByName(username);
-            Album album = albumRepository.findAlbumByTitle(albumTitle);
-
-            int durationInSecond = durationExtract.getDurationInSecond(file);
-
-            Track track = new Track(null, trackTitle, artist, album , durationInSecond, releaseDate, filePath, imagePath);
-            file.transferTo(saveTrackFile);
-            trackRepository.save(track);
-            return true;
-        }catch (Exception e) {
-            e.printStackTrace();
-            return false;
         }
-    }
+
 
     public void deleteTrack(Integer trackId) {
         trackRepository.deleteById(trackId);

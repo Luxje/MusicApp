@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -87,16 +88,15 @@ public class MainController {
     }
 
     @PostMapping("/upload")
-    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req,
-                           @RequestParam("albumTitle") String albumTitle, @RequestParam("releaseDate") Date releaseDate,
-                           @RequestParam("trackTitle") String trackTitle
-    )
+    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req)
     {
         if (file.isEmpty()) {
             model.addAttribute("message", "Please select a file");
             return "upload";
         }
-
+        String trackTitle = "toi dang check";
+        String albumTitle = "toi dang check";
+        Date releaseDate = new Date();
         String username = (String) session.getAttribute("username");
         if (trackService.uploadTrack(file, releaseDate, trackTitle, albumTitle, username)) {
             model.addAttribute("message", "Successfully uploaded " + file.getOriginalFilename());
