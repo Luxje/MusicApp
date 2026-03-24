@@ -20,9 +20,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -79,7 +81,32 @@ public class MainController {
     }
 
 
+    @GetMapping("/upload")
+    public String directUpload() {
+        return "Upload";
+    }
 
+    @PostMapping("/upload")
+    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req,
+                           @RequestParam("albumTitle") String albumTitle, @RequestParam("releaseDate") Date releaseDate,
+                           @RequestParam("trackTitle") String trackTitle
+    )
+    {
+        if (file.isEmpty()) {
+            model.addAttribute("message", "Please select a file");
+            return "upload";
+        }
+
+        String username = (String) session.getAttribute("username");
+        if (trackService.uploadTrack(file, releaseDate, trackTitle, albumTitle, username)) {
+            model.addAttribute("message", "Successfully uploaded " + file.getOriginalFilename());
+            return "upload";
+        }
+        else {
+            model.addAttribute("message", "Failed to upload " + file.getOriginalFilename());
+        }
+        return "upload";
+    }
 
 
 

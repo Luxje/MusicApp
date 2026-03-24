@@ -10,6 +10,7 @@ import org.apache.tika.sax.BodyContentHandler;
 import java.io.InputStream;
 
 public class DurationExtract {
+
     public int getDurationInSecond(MultipartFile file) {
         try (InputStream is = file.getInputStream()) {
             BodyContentHandler handler = new BodyContentHandler();

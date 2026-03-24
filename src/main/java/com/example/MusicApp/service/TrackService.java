@@ -29,13 +29,13 @@ public class TrackService {
     private final TrackRepository trackRepository;
     private final AlbumRepository albumRepository;
     private final ArtistRepository artistRepository;
-    private final DurationExtract durationExtract;
 
-    public TrackService(TrackRepository trackRepository, AlbumRepository albumRepository, ArtistRepository artistRepository, DurationExtract durationExtract) {
+    private final DurationExtract durationExtract = new DurationExtract();
+
+    public TrackService(TrackRepository trackRepository, AlbumRepository albumRepository, ArtistRepository artistRepository) {
         this.trackRepository = trackRepository;
         this.albumRepository = albumRepository;
         this.artistRepository = artistRepository;
-        this.durationExtract = durationExtract;
     }
 
     public List<Track> getTrackByArtistName(String artistName) {

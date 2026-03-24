@@ -20,11 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
-import java.util.Objects;
 
 @RestController // Use RestController for streaming data/files
 @RequestMapping("/api/tracks")
@@ -65,23 +63,5 @@ public class TrackController {
     }
 
 
-    @GetMapping("/upload")
-    public String directUpload() {
-        return "Upload";
-    }
 
-    @PostMapping("/upload")
-    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req,
-                           @RequestParam("albumTitle") String albumTitle, @RequestParam("releaseDate") Date releaseDate,
-                           @RequestParam("trackTitle") String trackTitle
-                           )
-    {
-        if (file.isEmpty()) {
-            model.addAttribute("message", "Please select a file");
-            return "upload";
-        }
-
-        if (trackService.uploadTrack(file, re))
-
-    }
 }
