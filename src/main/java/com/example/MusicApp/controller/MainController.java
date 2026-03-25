@@ -88,13 +88,12 @@ public class MainController {
     }
 
     @PostMapping("/upload")
-    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req)
+    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, HttpServletRequest req, @RequestParam("trackTitle") String trackTitle)
     {
         if (file.isEmpty()) {
             model.addAttribute("message", "Please select a file");
             return "upload";
         }
-        String trackTitle = "toi dang check";
         String albumTitle = "toi dang check";
         Date releaseDate = new Date();
         String username = (String) session.getAttribute("username");
