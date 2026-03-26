@@ -26,6 +26,7 @@ public class DurationExtract {
             if (durationStr != null) {
                 double milliseconds = Double.parseDouble(durationStr);
                 return (int) (milliseconds / 1000); // Convert to seconds
+
             }
         } catch (Exception e) {
             e.printStackTrace();

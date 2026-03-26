@@ -72,6 +72,7 @@ public class TrackService {
 
                 // Extract metadata
                 int durationInSecond = durationExtract.getDurationInSecond(file);
+                System.out.println(durationInSecond);
                 Artist artist = artistRepository.findByName(username);
                 Album album = albumRepository.findAlbumByTitle(albumTitle);
 
