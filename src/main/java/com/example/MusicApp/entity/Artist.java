@@ -20,6 +20,9 @@ public class Artist {
     @Column(name = "Name")
     private String name;
 
+    @Column(name = "Email")
+    private String email;
+
     @Column(name = "Genre")
     private String genre;
 

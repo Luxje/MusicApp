@@ -24,12 +24,12 @@ public class UserService {
     public Boolean validateLogin(String email, String password) {
         Users user = userRepository.findByEmail(email);
         if (user != null) {
-            if (user.getPassword().equals(password)) {
+//            if (user.getPassword().equals(password)) {
                 return true;
             }
-        }else {
-            return false;
-        }
+//        }else {
+//            return false;
+//        }
         return null;
     }
 
@@ -54,7 +54,7 @@ public class UserService {
             return false;
         }
                 SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findBySubscriptionPlanID(subscriptionPlanId);
-                userRepository.save(new Users(null, username, email, password, subscriptionPlan));
+//                userRepository.save(new Users(null, username, email, password, subscriptionPlan));
                 System.out.println("thanh cong");
                 return true;
         }

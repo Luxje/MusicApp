@@ -6,7 +6,7 @@
 </head>
 <body>
 <form th:action="@{/Music/upload}" method="post" enctype="multipart/form-data">
-    <span th:text="${message}"></span>
+    <span th:text="${message}"></span><br>
     <label>Put your track in, Only mp3 file</label>
     <input type="file" name="file">
     <label>Give your new track a name: </label>
