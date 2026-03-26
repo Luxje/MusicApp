@@ -23,8 +23,6 @@ public class Users {
     @Column(name = "Email")
     private String email;
 
-    @Column(name = "Password")
-    private String password;
 
     @ManyToOne
     @JoinColumn(name = "SubscriptionPlanID")

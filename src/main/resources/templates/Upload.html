@@ -5,6 +5,13 @@
     <title>Upload</title>
 </head>
 <body>
-<form th:action="@{TrackController/Upload}"></form>
+<form th:action="@{/Music/upload}" method="post" enctype="multipart/form-data">
+    <span th:text="${message}"></span><br>
+    <label>Put your track in, Only mp3 file</label>
+    <input type="file" name="file">
+    <label>Give your new track a name: </label>
+    <input type="text" name="trackTitle">
+    <button type="submit">Upload</button>
+</form>
 </body>
 </html>

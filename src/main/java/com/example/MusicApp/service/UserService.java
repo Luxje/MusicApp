@@ -1,7 +1,9 @@
 package com.example.MusicApp.service;
 
+import com.example.MusicApp.entity.Artist;
 import com.example.MusicApp.entity.SubscriptionPlan;
 import com.example.MusicApp.entity.Users;
+import com.example.MusicApp.repository.ArtistRepository;
 import com.example.MusicApp.repository.SubscriptionPlanRepository;
 import com.example.MusicApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +17,19 @@ public class UserService {
 
     @Autowired
     SubscriptionPlanRepository subscriptionPlanRepository;
+    @Autowired
+    private ArtistRepository artistRepository;
 
 
     public Boolean validateLogin(String email, String password) {
         Users user = userRepository.findByEmail(email);
         if (user != null) {
-            if (user.getPassword().equals(password)) {
+//            if (user.getPassword().equals(password)) {
                 return true;
             }
-        }else {
-            return false;
-        }
+//        }else {
+//            return false;
+//        }
         return null;
     }
 
@@ -50,11 +54,17 @@ public class UserService {
             return false;
         }
                 SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findBySubscriptionPlanID(subscriptionPlanId);
-                userRepository.save(new Users(null, username, email, password, subscriptionPlan));
+//                userRepository.save(new Users(null, username, email, password, subscriptionPlan));
                 System.out.println("thanh cong");
                 return true;
         }
 
+
+        public Artist getArtistByUsername(String username) {
+            Artist artist = artistRepository.findArtistByUser_Username(username);
+
+            return artist;
+        }
 
     }
 
