@@ -1,6 +1,7 @@
 package com.example.MusicApp.controller;
 
 import com.example.MusicApp.entity.Users;
+import com.example.MusicApp.service.AccountService;
 import com.example.MusicApp.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     private final UserService userService;
+    private final AccountService accountService;
 
-    public AccountController(UserService userService) {
+    public AccountController(UserService userService, AccountService accountService) {
         this.userService = userService;
+        this.accountService = accountService;
     }
 
     @GetMapping("/login")
@@ -25,12 +28,11 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public String handleLogin(HttpServletRequest req, HttpSession session, Model model) {
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
+    public String handleLogin(HttpSession session, Model model, @RequestParam("email") String email, @RequestParam("password") String password) {
         if (userService.validateLogin(email, password)) {
+            String displayName = accountService.findAccountByEmail(email).getDisplayName();
             session.setAttribute("email", email);
-            session.setAttribute("username", userService.getTenByEmail(email));
+            session.setAttribute("username", displayName);
             return "redirect:/Music/Home";
         }else {
             model.addAttribute("message", "Invalid email or password");
@@ -46,7 +48,7 @@ public class AccountController {
 
 
     @PostMapping("/register")
-    public String handleRegister(HttpServletRequest req, HttpServletResponse res, HttpSession session, Model model) {
+    public String handleRegister(HttpServletRequest req, HttpSession session, Model model) {
         String email = req.getParameter("signupEmail");
         String password = req.getParameter("signupPassword");
         String username = req.getParameter("signupUsername");
