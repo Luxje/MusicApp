@@ -4,10 +4,7 @@ import com.example.MusicApp.entity.Album;
 import com.example.MusicApp.entity.Track;
 import com.example.MusicApp.repository.AlbumRepository;
 import com.example.MusicApp.repository.TrackRepository;
-import com.example.MusicApp.service.AlbumService;
-import com.example.MusicApp.service.ArtistService;
-import com.example.MusicApp.service.TrackService;
-import com.example.MusicApp.service.UserService;
+import com.example.MusicApp.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -40,9 +37,10 @@ public class MainController {
     private final ArtistService artistService;
     private final TrackRepository trackRepository;
     private final AlbumService albumService;
+    private final AccountService accountService;
 
 
-    public MainController(HttpServletRequest req, HttpServletResponse resp, UserService userService, TrackService trackService, ArtistService artistService, TrackRepository trackRepository, AlbumService albumService) {
+    public MainController(HttpServletRequest req, HttpServletResponse resp, UserService userService, TrackService trackService, ArtistService artistService, TrackRepository trackRepository, AlbumService albumService, AccountService accountService) {
         this.req = req;
         this.resp = resp;
         this.userService = userService;
@@ -51,14 +49,15 @@ public class MainController {
         this.trackRepository = trackRepository;
 
         this.albumService = albumService;
+        this.accountService = accountService;
     }
 
     @GetMapping("/Home")
     public String home(HttpSession session, Model model) {
         String email = (String) session.getAttribute("email");
-        String username = userService.getTenByEmail(email);
+        String displayName = accountService.findAccountByEmail(email).getUsername();
         String artistName = req.getParameter("artistName");
-        model.addAttribute("username", username);
+        model.addAttribute("displayName", displayName);
         model.addAttribute("trackList", trackRepository.findAll());
         req.setAttribute("lstArtist", artistService.getArtistByName(artistName));
         return "MainPage";
