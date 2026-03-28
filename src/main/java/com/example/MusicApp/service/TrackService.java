@@ -53,7 +53,7 @@ public class TrackService {
 
 
     public List<Track> getTrackByTitle(String title) {
-        List<Track> lstTrack = trackRepository.findTracksByTitle(title);
+        List<Track> lstTrack = trackRepository.findTracksByTitleContaining(title);
             return lstTrack;
         }
 

@@ -11,5 +11,7 @@ public interface TrackRepository extends CrudRepository<Track, Integer> {
 
     public Track findTrackByTrackId(int id);
 
+    public List<Track> findTracksByTitleContaining(String title);
+
     public List<Track> findTracksByTitle(String title);
 }
