@@ -6,32 +6,35 @@ import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.sax.BodyContentHandler;
+import org.tritonus.share.sampled.file.TAudioFileFormat;
 
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
+import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.sql.SQLOutput;
+import java.util.Map;
 
 public class DurationExtract {
 
     public int getDurationInSecond(MultipartFile file) {
-        try (InputStream is = file.getInputStream()) {
-            BodyContentHandler handler = new BodyContentHandler();
-            Metadata metadata = new Metadata();
-            AutoDetectParser parser = new AutoDetectParser();
-            ParseContext context = new ParseContext();
+        try (InputStream is = file.getInputStream();
+             // AudioSystem requires a marked/reset-able stream for MP3s
+             InputStream bufferedIs = new BufferedInputStream(is)) {
 
-            parser.parse(is, handler, metadata, context);
+            AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(bufferedIs);
 
-            // Tika extracts duration in milliseconds
-            String durationStr = metadata.get("xmpDM:duration");
+            if (fileFormat instanceof TAudioFileFormat) {
+                Map<?, ?> properties = ((TAudioFileFormat) fileFormat).properties();
+                Long microseconds = (Long) properties.get("duration");
 
-            if (durationStr != null) {
-                double milliseconds = Double.parseDouble(durationStr);
-                return (int) (milliseconds / 1000); // Convert to seconds
-
+                if (microseconds != null) {
+                    System.out.println(microseconds / 1_000_000);
+                    return (int) (microseconds / 1_000_000); // Direct to seconds
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0; // Fallback if duration can't be read
-
-    }
-}
+        return 0;
+    }}

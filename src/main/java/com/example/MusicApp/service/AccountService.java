@@ -21,30 +21,35 @@ public class AccountService {
     }
 
 
-    public Boolean validateLogin(LoginCredentials loginCredentials) {
-        Account account = accountRepository.findByEmail(loginCredentials.getEmail());
+    public Boolean validateLogin(String email, String password) {
+        Account account = accountRepository.findByEmail(email);
         if (account == null) {
             return false;
         }
 
-        return encoder.matches(loginCredentials.getPassword(), account.getPassword());
+        return encoder.matches(password, account.getPassword());
 
     }
 
-    public boolean registerAccount(RegisterCredentials registerCredentials) {
-        boolean emailFormat = registerCredentials.getEmail().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+    public boolean registerAccount(String email, String password, String username ) {
+        boolean emailFormat = email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
         if (emailFormat) {
             return false;
         }
-        if (accountRepository.findByEmail(registerCredentials.getEmail()) != null) {
+        if (accountRepository.findByEmail(email) != null) {
             return false;
         }
-            String encodedPassword = encoder.encode(registerCredentials.getPassword());
+            String encodedPassword = encoder.encode(password);
             Account account = new Account();
-            account.setEmail(registerCredentials.getEmail());
+            account.setEmail(email);
             account.setPassword(encodedPassword);
+            account.setUsername(username);
             accountRepository.save(account);
             return true;
+    }
+
+    public boolean validatePasswordConfirm(String password, String confirmPassword) {
+        return password.equals(confirmPassword);
     }
 
 }

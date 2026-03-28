@@ -76,7 +76,7 @@ public class MainController {
     }
 
     @PostMapping("/upload")
-    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, @RequestParam("trackTitle") String trackTitle, @RequestParam("albumTitle") String albumTitle)
+    public String addTrack(@RequestPart("file") MultipartFile file, HttpSession session, Model model, @RequestParam("trackTitle") String trackTitle)
     {
         if (file.isEmpty()) {
             model.addAttribute("message", "Please select a file");
@@ -85,7 +85,7 @@ public class MainController {
 
         Date releaseDate = new Date();
         String username = (String) session.getAttribute("username");
-        if (trackService.uploadTrack(file, releaseDate, trackTitle, albumTitle, username)) {
+        if (trackService.uploadTrack(file, releaseDate, trackTitle, "day la 1 cai album title", username)) {
             model.addAttribute("message", "Successfully uploaded " + file.getOriginalFilename());
             return "upload";
         }

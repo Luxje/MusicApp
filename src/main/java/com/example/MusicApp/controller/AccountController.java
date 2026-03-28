@@ -1,5 +1,7 @@
 package com.example.MusicApp.controller;
 
+import com.example.MusicApp.accountCredentials.LoginCredentials;
+import com.example.MusicApp.accountCredentials.RegisterCredentials;
 import com.example.MusicApp.entity.Users;
 import com.example.MusicApp.service.AccountService;
 import com.example.MusicApp.service.UserService;
@@ -28,8 +30,10 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public String handleLogin(HttpSession session, Model model, @RequestParam("email") String email, @RequestParam("password") String password) {
-        if (userService.validateLogin(email, password)) {
+    public String handleLogin(HttpSession session, Model model, @ModelAttribute("account") LoginCredentials account) {
+        String email = account.getEmail();
+        String password = account.getPassword();
+        if (accountService.validateLogin(email, password)) {
             String displayName = accountService.findAccountByEmail(email).getDisplayName();
             session.setAttribute("email", email);
             session.setAttribute("username", displayName);
@@ -48,11 +52,16 @@ public class AccountController {
 
 
     @PostMapping("/register")
-    public String handleRegister(HttpServletRequest req, HttpSession session, Model model) {
-        String email = req.getParameter("signupEmail");
-        String password = req.getParameter("signupPassword");
-        String username = req.getParameter("signupUsername");
-        Boolean result = userService.validateRegister(username, email, password, 1);
+    public String handleRegister(Model model, @ModelAttribute("account") RegisterCredentials account, HttpSession session) {
+        String username = account.getUsername();
+        String password = account.getPassword();
+        String email = account.getEmail();
+        String confirmPassword = account.getPasswordConfirm();
+        if (!accountService.validatePasswordConfirm(password, confirmPassword)) {
+            session.setAttribute("message", "Password not matched");
+            return "Register";
+        }
+        boolean result = accountService.registerAccount(username, email, password);
 
         if (result) {
             model.addAttribute("message", "Registration Successful");
