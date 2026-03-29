@@ -44,5 +44,9 @@ public class Account {
     @Column(name = "TotalPlays")
     private Integer totalPlays;
 
+    @OneToOne
+    @JoinColumn(name = "id", referencedColumnName = "ArtistID")
+    private Artist artist;
+
 
 }

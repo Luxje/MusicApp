@@ -1,17 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Upload</title>
+    <title>Upload | MusicApp</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body { background-color: #121212; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        #app { background: #1e1e1e; padding: 2rem; border-radius: 8px; width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .upload-box { border: 2px dashed #444; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer; }
+        .upload-box:hover { border-color: #f50; }
+        input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; background: #333; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #f50; border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        button:disabled { background: #555; }
+        .success-msg { color: #4caf50; margin-top: 10px; text-align: center; }
+    </style>
 </head>
 <body>
-<form th:action="@{/Music/upload}" method="post" enctype="multipart/form-data">
-    <span th:text="${message}"></span><br>
-    <label>Put your track in, Only mp3 file</label>
-    <input type="file" name="file">
-    <label>Give your new track a name: </label>
-    <input type="text" name="trackTitle">
-    <button type="submit">Upload</button>
-</form>
+
+<div id="app">
+    <h1>Upload Track</h1>
+
+    <p v-if="message" class="success-msg">{{ message }}</p>
+
+    <div class="upload-box" @click="$refs.fileInput.click()">
+        <input type="file" ref="fileInput" @change="onFileChange" style="display:none">
+        <span v-if="!file">Click to select MP3</span>
+        <span v-else style="color: #f50">Selected: {{ file.name }}</span>
+    </div>
+
+    <div v-if="file">
+        <label>Track Title</label>
+        <input type="text" v-model="trackTitle" placeholder="Enter title...">
+
+        <label>Artist Name</label>
+        <input type="text" v-model="artistName" placeholder="Enter artist...">
+
+        <button @click="upload" :disabled="loading">
+            {{ loading ? 'Processing Duration...' : 'Upload Now' }}
+        </button>
+    </div>
+</div>
+
+<script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+        setup() {
+            const file = ref(null);
+            const trackTitle = ref('');
+            const artistName = ref('');
+            const message = ref('');
+            const loading = ref(false);
+
+            const onFileChange = (e) => {
+                file.value = e.target.files[0];
+            };
+
+            const upload = async () => {
+                loading.value = true;
+                const formData = new FormData();
+                formData.append('file', file.value);
+                formData.append('trackTitle', trackTitle.value);
+                formData.append('artistName', artistName.value);
+
+                try {
+                    // This matches your Spring Boot @PostMapping("/Music/upload")
+                    const res = await axios.post('/Music/upload', formData);
+                    message.value = "Track Uploaded Successfully!";
+                    file.value = null;
+                } catch (err) {
+                    message.value = "Upload failed: " + err.message;
+                } finally {
+                    loading.value = false;
+                }
+            };
+
+            return { file, trackTitle, artistName, message, loading, onFileChange, upload };
+        }
+    }).mount('#app');
+</script>
+
 </body>
 </html>

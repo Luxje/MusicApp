@@ -52,16 +52,8 @@ public class AccountController {
 
 
     @PostMapping("/register")
-    public String handleRegister(Model model, @ModelAttribute("account") RegisterCredentials account, HttpSession session) {
-        String username = account.getUsername();
-        String password = account.getPassword();
-        String email = account.getEmail();
-        String confirmPassword = account.getPasswordConfirm();
-        if (!accountService.validatePasswordConfirm(password, confirmPassword)) {
-            session.setAttribute("message", "Password not matched");
-            return "Register";
-        }
-        boolean result = accountService.registerAccount(username, email, password);
+    public String handleRegister(Model model, @RequestParam("signupUsername") String username, @RequestParam("signupEmail") String email, @RequestParam("signupPassword") String password, HttpSession session) {
+        boolean result = accountService.registerAccount(email, password, username);
 
         if (result) {
             model.addAttribute("message", "Registration Successful");
@@ -70,6 +62,5 @@ public class AccountController {
             model.addAttribute("message", "Registration Failed");
             return "Register";
         }
-
     }
 }

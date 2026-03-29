@@ -58,7 +58,7 @@ public class TrackService {
         }
 
 
-    public boolean uploadTrack(MultipartFile file, Date releaseDate, String trackTitle, String albumTitle, String username) {
+    public boolean uploadTrack(MultipartFile file, Date releaseDate, String trackTitle, String albumTitle, String ArtistName) {
             try {
                 Path trackDir = Paths.get("D:/Filenhac");
                 Path imageDir = Paths.get("D:/PersonalProject/MusicApp/Image"); // Better to keep them near each other
@@ -71,16 +71,13 @@ public class TrackService {
                 Path imagePath = imageDir.resolve(fileName);
 
                 // Extract metadata
-                int durationInSecond = durationExtract.getDurationInSecond(file);
-                System.out.println(durationInSecond);
-                Artist artist = artistRepository.findByName(username);
+                Double durationInSecond = durationExtract.getDurationWithTika(file);
                 Album album = albumRepository.findAlbumByTitle(albumTitle);
-
                 // Save the physical file
                 Files.copy(file.getInputStream(), trackPath, StandardCopyOption.REPLACE_EXISTING);
 
                 // Save to DB
-                Track track = new Track(null, trackTitle, artist, album, durationInSecond, releaseDate,
+                Track track = new Track(null, trackTitle, ArtistName, album, durationInSecond, releaseDate,
                         trackPath.toString(), imagePath.toString());
                 trackRepository.save(track);
 

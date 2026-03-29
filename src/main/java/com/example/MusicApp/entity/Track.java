@@ -24,10 +24,8 @@ public class Track {
     @Column(name = "Title")
     private String title;
 
-    // --- Database Relationships ---
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ArtistID")
-    private Artist artist;
+    @Column(name = "ArtistName")
+    private String artistName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AlbumID")
@@ -35,7 +33,7 @@ public class Track {
     // ------------------------------
 
     @Column(name = "DurationSeconds")
-    private int durationSeconds;
+    private Double durationSeconds;
 
     @Column(name = "ReleaseDate")
     private Date releaseDate;

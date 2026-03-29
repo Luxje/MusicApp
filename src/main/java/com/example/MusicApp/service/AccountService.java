@@ -31,7 +31,7 @@ public class AccountService {
 
     }
 
-    public boolean registerAccount(String email, String password, String username ) {
+    public boolean registerAccount(String email, String password, String username) {
         boolean emailFormat = email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
         if (emailFormat) {
             return false;
@@ -40,16 +40,10 @@ public class AccountService {
             return false;
         }
             String encodedPassword = encoder.encode(password);
-            Account account = new Account();
-            account.setEmail(email);
-            account.setPassword(encodedPassword);
-            account.setUsername(username);
+            Account account = new Account(null ,username, email, password, "toi dang check", "toi dang check", "toi dang check" , "ARTIST", true, 100, null);
             accountRepository.save(account);
             return true;
     }
 
-    public boolean validatePasswordConfirm(String password, String confirmPassword) {
-        return password.equals(confirmPassword);
-    }
 
 }

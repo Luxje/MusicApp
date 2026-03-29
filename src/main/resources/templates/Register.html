@@ -12,13 +12,14 @@
                 <div class="flip-card__inner">
                     <div class="flip-card__back">
                         <div class="title">Sign up</div>
-                        <form class="flip-card__form" action="/account/register" method="post">
+                        <form class="flip-card__form" action="/Account/register" method="post">
                             <input class="flip-card__input" name="signupUsername" placeholder="Username" type="text">
                             <input class="flip-card__input" name="signupEmail" placeholder="Email" type="email">
                             <input class="flip-card__input" name="signupPassword" placeholder="Password" type="password">
+                            <input class="flip-card__input" name="confirmPassword" placeholder="Password" type="password">
                             <button class="flip-card__btn">Confirm!</button>
                         </form>
-                        <a th:href="@{/Account/login}"><button class="flip-card__btn">Register</button></a>
+                        <a th:href="@{/Account/login}"><button class="flip-card__btn">U have an account?</button></a>
                     </div>
                 </div>
         </div>
