@@ -20,6 +20,8 @@ import java.util.List;
 public class MainController {
 
     private final HttpServletRequest req;
+    private final HttpServletResponse resp;
+    private final UserService userService;
     private final TrackService trackService;
     private final ArtistService artistService;
     private final TrackRepository trackRepository;
@@ -34,7 +36,6 @@ public class MainController {
         this.trackService = trackService;
         this.artistService = artistService;
         this.trackRepository = trackRepository;
-
         this.albumService = albumService;
         this.accountService = accountService;
     }
