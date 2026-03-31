@@ -29,6 +29,11 @@ public class AccountController {
         return "Login";
     }
 
+    @GetMapping("/register")
+    public String directRegister() {
+        return "Register";
+    }
+
     @PostMapping("/login")
     public String handleLogin(HttpSession session, Model model, @ModelAttribute("account") LoginCredentials account) {
         String email = account.getEmail();
@@ -44,17 +49,12 @@ public class AccountController {
         }
     }
 
-
-    @GetMapping("/register")
-    public String directRegister() {
-        return "Register";
-    }
+    
 
 
     @PostMapping("/register")
     public String handleRegister(Model model, @RequestParam("signupUsername") String username, @RequestParam("signupEmail") String email, @RequestParam("signupPassword") String password, HttpSession session) {
         boolean result = accountService.registerAccount(email, password, username);
-
         if (result) {
             model.addAttribute("message", "Registration Successful");
             return "redirect:/Account/login";
