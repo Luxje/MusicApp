@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload to Cloud</title>
     <link rel="stylesheet" th:href="@{/upload.css}">
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -18,20 +18,31 @@
     </header>
 
     <main class="upload-section">
-        <h1>Upload your audio files.</h1>
+        <h1>Upload your content.</h1>
         <p class="subtitle">
-            For best quality, use WAV, FLAC, AIFF, or ALAC. The maximum file size is 4GB uncompressed.
+            For best quality, use WAV, FLAC, or AIFF for audio.
             <a href="#">Learn more.</a>
         </p>
 
         <div class="drop-zone">
             <div class="icon-container">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <i class="fa-solid fa-music"></i>
             </div>
-            <p>Drag and drop audio files to get started.</p>
-            <input type="file" id="fileInput" name="fileInput" hidden multiple>
-            <button class="choose-files-btn" onclick="document.getElementById('fileInput').click()">
-                Choose files
+            <p>Drag and drop <strong>audio files</strong> here.</p>
+            <input type="file" id="audioInput" name="audioInput" hidden multiple accept="audio/*">
+            <button class="choose-files-btn" onclick="document.getElementById('audioInput').click()">
+                Choose Audio
+            </button>
+        </div>
+
+        <div class="drop-zone image-zone" style="margin-top: 20px; border-style: dotted; background-color: #fafafa;">
+            <div class="icon-container" style="color: #2ecc71;">
+                <i class="fa-solid fa-image"></i>
+            </div>
+            <p>Drag and drop <strong>artwork or images</strong> here.</p>
+            <input type="file" id="imageInput" name="imageInput" hidden accept="image/*">
+            <button class="choose-files-btn" style="background-color: #2ecc71;" onclick="document.getElementById('imageInput').click()">
+                Choose Image
             </button>
         </div>
     </main>
@@ -51,10 +62,7 @@
         <a href="#">Legal</a>
         <a href="#">Privacy</a>
         <a href="#">Cookie Policy</a>
-        <a href="#">Cookie Manager</a>
-        <a href="#">Imprint</a>
         <a href="#">About us</a>
-        <a href="#">Copyright</a>
         <a href="#">Feedback</a>
     </nav>
 </div>

@@ -58,7 +58,7 @@ public class TrackService {
         }
 
 
-    public boolean uploadTrack(MultipartFile file, Date releaseDate, String trackTitle, String albumTitle, String ArtistName) {
+    public boolean uploadTrack(MultipartFile file, MultipartFile imageFile, Date releaseDate, String trackTitle, String albumTitle, String ArtistName) {
             try {
                 Path trackDir = Paths.get("D:/Filenhac");
                 Path imageDir = Paths.get("D:/PersonalProject/MusicApp/Image"); // Better to keep them near each other
