@@ -1,0 +1,163 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #0b0b0b;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.close-btn {
+    background: #222;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main Section */
+.upload-section h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #999;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+.subtitle a {
+    color: #999;
+    text-decoration: underline;
+}
+
+/* Drop Zone */
+.drop-zone {
+    border: 1px dashed #555;
+    border-radius: 4px;
+    padding: 60px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-container {
+    font-size: 50px;
+    color: #fff;
+    opacity: 0.8;
+}
+
+.drop-zone p {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.choose-files-btn {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 10px 25px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.choose-files-btn:hover {
+    background-color: #ddd;
+}
+
+/* Recording Section */
+.record-section {
+    background-color: #1a1a1a;
+    margin-top: 30px;
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.record-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.record-content i {
+    font-size: 1.2rem;
+}
+
+.record-text {
+    flex-grow: 1;
+}
+
+.record-text strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.record-text p {
+    color: #999;
+    font-size: 0.85rem;
+}
+
+.arrow {
+    color: #666;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.bottom-nav a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.75rem;
+}
+
+.bottom-nav a:hover {
+    color: #999;
+}

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/Account")
@@ -49,12 +50,16 @@ public class AccountController {
         }
     }
 
-    
-
 
     @PostMapping("/register")
-    public String handleRegister(Model model, @RequestParam("signupUsername") String username, @RequestParam("signupEmail") String email, @RequestParam("signupPassword") String password, HttpSession session) {
-        boolean result = accountService.registerAccount(email, password, username);
+    public String handleRegister(Model model,
+                                 @RequestParam("signupUsername") String username,
+                                 @RequestParam("signupEmail") String email,
+                                 @RequestParam("signupPassword") String password,
+                                 @RequestPart("imageFile") MultipartFile imageFile,
+                                 @RequestParam("displayName") String displayName,
+                                 HttpSession session) {
+        boolean result = accountService.registerAccount(email, password, username, displayName, null);
         if (result) {
             model.addAttribute("message", "Registration Successful");
             return "redirect:/Account/login";

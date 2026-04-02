@@ -1,85 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload | MusicApp</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <style>
-        body { background-color: #121212; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        #app { background: #1e1e1e; padding: 2rem; border-radius: 8px; width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .upload-box { border: 2px dashed #444; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer; }
-        .upload-box:hover { border-color: #f50; }
-        input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; background: #333; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #f50; border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 4px; }
-        button:disabled { background: #555; }
-        .success-msg { color: #4caf50; margin-top: 10px; text-align: center; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload to Cloud</title>
+    <link rel="stylesheet" th:href="@{/upload.css}">
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">-->
 </head>
 <body>
 
-<div id="app">
-    <h1>Upload Track</h1>
+<div class="container">
+    <header class="header">
+        <div class="logo">
+            <i class="fa-solid fa-cloud"></i> Upload
+        </div>
+        <button class="close-btn">&times;</button>
+    </header>
 
-    <p v-if="message" class="success-msg">{{ message }}</p>
+    <main class="upload-section">
+        <h1>Upload your audio files.</h1>
+        <p class="subtitle">
+            For best quality, use WAV, FLAC, AIFF, or ALAC. The maximum file size is 4GB uncompressed.
+            <a href="#">Learn more.</a>
+        </p>
 
-    <div class="upload-box" @click="$refs.fileInput.click()">
-        <input type="file" ref="fileInput" @change="onFileChange" style="display:none">
-        <span v-if="!file">Click to select MP3</span>
-        <span v-else style="color: #f50">Selected: {{ file.name }}</span>
-    </div>
+        <div class="drop-zone">
+            <div class="icon-container">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <p>Drag and drop audio files to get started.</p>
+            <input type="file" id="fileInput" name="fileInput" hidden multiple>
+            <button class="choose-files-btn" onclick="document.getElementById('fileInput').click()">
+                Choose files
+            </button>
+        </div>
+    </main>
 
-    <div v-if="file">
-        <label>Track Title</label>
-        <input type="text" v-model="trackTitle" placeholder="Enter title...">
+    <footer class="record-section">
+        <div class="record-content">
+            <i class="fa-solid fa-microphone"></i>
+            <div class="record-text">
+                <strong>Or record with a microphone</strong>
+                <p>Upload recorded voice memos, updates, news, or intros to new releases.</p>
+            </div>
+            <i class="fa-solid fa-chevron-down arrow"></i>
+        </div>
+    </footer>
 
-        <label>Artist Name</label>
-        <input type="text" v-model="artistName" placeholder="Enter artist...">
-
-        <button @click="upload" :disabled="loading">
-            {{ loading ? 'Processing Duration...' : 'Upload Now' }}
-        </button>
-    </div>
+    <nav class="bottom-nav">
+        <a href="#">Legal</a>
+        <a href="#">Privacy</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Cookie Manager</a>
+        <a href="#">Imprint</a>
+        <a href="#">About us</a>
+        <a href="#">Copyright</a>
+        <a href="#">Feedback</a>
+    </nav>
 </div>
-
-<script>
-    const { createApp, ref } = Vue;
-
-    createApp({
-        setup() {
-            const file = ref(null);
-            const trackTitle = ref('');
-            const artistName = ref('');
-            const message = ref('');
-            const loading = ref(false);
-
-            const onFileChange = (e) => {
-                file.value = e.target.files[0];
-            };
-
-            const upload = async () => {
-                loading.value = true;
-                const formData = new FormData();
-                formData.append('file', file.value);
-                formData.append('trackTitle', trackTitle.value);
-                formData.append('artistName', artistName.value);
-
-                try {
-                    // This matches your Spring Boot @PostMapping("/Music/upload")
-                    const res = await axios.post('/Music/upload', formData);
-                    message.value = "Track Uploaded Successfully!";
-                    file.value = null;
-                } catch (err) {
-                    message.value = "Upload failed: " + err.message;
-                } finally {
-                    loading.value = false;
-                }
-            };
-
-            return { file, trackTitle, artistName, message, loading, onFileChange, upload };
-        }
-    }).mount('#app');
-</script>
 
 </body>
 </html>
