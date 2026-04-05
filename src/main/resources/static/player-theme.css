@@ -1,0 +1,334 @@
+:root {
+    --bg-base: #121212;
+    --bg-elevated: #181818;
+    --bg-highlight: #282828;
+    --text-base: #ffffff;
+    --text-subdued: #a7a7a7;
+    --accent: #1db954; /* Classic streaming green */
+    --border-radius: 8px;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-base);
+    padding-bottom: 100px; /* Space for the fixed player */
+}
+
+/* --- Header Navigation --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text-base);
+}
+
+nav {
+    display: flex;
+    gap: 24px;
+}
+
+nav a, .pro-link {
+    color: var(--text-subdued);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+nav a:hover, .pro-link:hover {
+    color: var(--text-base);
+}
+
+/* --- Search Bar --- */
+.search-bar {
+    display: flex;
+    background-color: #242424;
+    border-radius: 10000px;
+    padding: 6px 6px 6px 16px;
+    align-items: center;
+    border: 1px solid transparent;
+    transition: border 0.3s;
+}
+
+.search-bar:focus-within {
+    border: 1px solid var(--text-subdued);
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    color: var(--text-base);
+    outline: none;
+    width: 200px;
+    font-size: 0.9rem;
+}
+
+.search-bar button {
+    background-color: var(--text-base);
+    color: #000;
+    border: none;
+    border-radius: 500px;
+    padding: 8px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.search-bar button:active {
+    transform: scale(0.95);
+}
+
+/* --- Main Content Area --- */
+.content {
+    padding: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+/* --- Grid for Stations/Tracks --- */
+.stations1, .stations2 {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+}
+
+.station {
+    background-color: var(--bg-elevated);
+    padding: 16px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--text-base);
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.station:hover {
+    background-color: var(--bg-highlight);
+    transform: translateY(-4px);
+}
+
+.station img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.station span {
+    font-weight: 600;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Bottom Audio Player Bar --- */
+.card {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    background-color: #181818;
+    border-top: 1px solid #282828;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+/* Player Left: Track Details */
+.top {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    min-width: 180px;
+}
+
+.playing {
+    width: 40px;
+    height: 40px;
+    background: #282828;
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    padding: 8px 5px;
+    box-sizing: border-box;
+}
+
+.greenline {
+    background: var(--accent);
+    width: 3px;
+    border-radius: 2px;
+}
+
+.line-1 { height: 50%; }
+.line-2 { height: 80%; }
+.line-3 { height: 100%; }
+.line-4 { height: 60%; }
+.line-5 { height: 90%; }
+
+.texts {
+    margin-left: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title-1 {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-base);
+}
+
+.title-2 {
+    margin: 4px 0 0;
+    font-size: 0.75rem;
+    color: var(--text-subdued);
+}
+
+/* Player Center: Controls & Progress Bar */
+.player-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    max-width: 722px;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 8px;
+}
+
+.controls svg {
+    fill: var(--text-subdued);
+    cursor: pointer;
+    transition: fill 0.2s ease;
+}
+
+.controls svg:hover {
+    fill: var(--text-base);
+}
+
+#play-btn {
+    fill: #000;
+    background: var(--text-base);
+    border-radius: 50%;
+    padding: 8px;
+    width: 32px;
+    height: 32px;
+    transition: transform 0.1s ease;
+}
+
+#play-btn:hover {
+    transform: scale(1.05);
+}
+
+.progress-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.timetext {
+    font-size: 0.75rem;
+    color: var(--text-subdued);
+    min-width: 40px;
+    text-align: center;
+    margin: 0;
+}
+
+.time {
+    height: 4px;
+    background-color: #4d4d4d;
+    border-radius: 2px;
+    flex-grow: 1;
+    position: relative;
+    cursor: pointer;
+}
+
+.time:hover .elapsed {
+    background-color: var(--accent);
+}
+
+.elapsed {
+    height: 100%;
+    background-color: var(--text-base);
+    border-radius: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+/* Player Right: Volume */
+.player-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 30%;
+    min-width: 180px;
+    gap: 12px;
+}
+
+.player-right svg {
+    fill: var(--text-subdued);
+    cursor: pointer;
+}
+
+.player-right svg:hover {
+    fill: var(--text-base);
+}
+
+.volume {
+    width: 93px;
+    height: 4px;
+    background-color: #4d4d4d;
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.volume .slider {
+    height: 100%;
+    width: 60%;
+    background-color: var(--text-base);
+    border-radius: 2px;
+}
+
+.volume:hover .slider {
+    background-color: var(--accent);
+}
