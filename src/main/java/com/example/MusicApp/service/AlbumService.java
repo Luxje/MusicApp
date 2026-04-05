@@ -18,12 +18,11 @@ public class AlbumService {
 
     public List<Album> findByArtistName(String artistName) {
         List<Album> lstAlbum = albumRepository.findAlbumByArtist_Name(artistName) ;
-//        if (!lstAlbum.isEmpty()) {
-//            return lstAlbum;
-//        }else {
-//            return null;
-//        }
-        return lstAlbum;
+        if (!lstAlbum.isEmpty()) {
+            return lstAlbum;
+        }else {
+            return null;
+        }
     }
 
     public List<Album> findByAlbumTitle(String albumTitle) {

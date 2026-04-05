@@ -30,14 +30,12 @@ public class TrackService {
     private Thread playerThread;
     private final TrackRepository trackRepository;
     private final AlbumRepository albumRepository;
-    private final ArtistRepository artistRepository;
 
     private final DurationExtract durationExtract = new DurationExtract();
 
-    public TrackService(TrackRepository trackRepository, AlbumRepository albumRepository, ArtistRepository artistRepository) {
+    public TrackService(TrackRepository trackRepository, AlbumRepository albumRepository) {
         this.trackRepository = trackRepository;
         this.albumRepository = albumRepository;
-        this.artistRepository = artistRepository;
     }
 
     public List<Track> getTrackByArtistName(String artistName) {
@@ -89,50 +87,43 @@ public class TrackService {
         }
 
 
-    public void deleteTrack(Integer trackId) {
-        trackRepository.deleteById(trackId);
-    }
 
-//    public Boolean removeTrack(Integer trackId) {
-//        Boolean result = trackRepository.removeTrackByTrackId(trackId);
-//        if (result) {
-//            return true;
-//        }else {
-//            return false;
-//        }
-//    }
-
-
-    public void play(String filePath) {
-        stop();
-
-        playerThread = new Thread(() -> {
-            try (FileInputStream fis = new FileInputStream(filePath)) {
-                player = new AdvancedPlayer(fis);
-                System.out.println("Playing: " + filePath);
-
-                // Starts playing the MP3
-                player.play();
-            } catch (Exception e) {
-                System.err.println("Playback error: " + e.getMessage());
-                stop();
+    public Boolean removeTrack(Integer trackId) {
+                trackRepository.deleteById(trackId);
+                return true;
             }
-        });
-        playerThread.start();
-    }
 
-    public void stop() {
-        if (player != null) {
-            player.close();
-            player = null;
-        }
 
-        if (playerThread != null && playerThread.isAlive()) {
-            playerThread.interrupt();
-        }
-
-        System.out.println("Playback stopped.");
-    }
+////    public void play(String filePath) {
+////        stop();
+////
+////        playerThread = new Thread(() -> {
+////            try (FileInputStream fis = new FileInputStream(filePath)) {
+////                player = new AdvancedPlayer(fis);
+////                System.out.println("Playing: " + filePath);
+////
+////                // Starts playing the MP3
+////                player.play();
+////            } catch (Exception e) {
+////                System.err.println("Playback error: " + e.getMessage());
+////                stop();
+////            }
+////        });
+////        playerThread.start();
+////    }
+//
+//    public void stop() {
+//        if (player != null) {
+//            player.close();
+//            player = null;
+//        }
+//
+//        if (playerThread != null && playerThread.isAlive()) {
+//            playerThread.interrupt();
+//        }
+//
+//        System.out.println("Playback stopped.");
+//    }
 
 
 
