@@ -1,4 +1,4 @@
-//package com.example.MusicApp.configuration;
+//package com.example.MusicApp.security;
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@
 //                .authorizeHttpRequests(auth -> auth
 //                        .requestMatchers(
 //                                "/", "/home",
-//                                "/account/login", "/account/register",
+//                                "/Account/login", "/Account/register",
 //                                "/mainController/mainPage",
 //                                "/api/**",
 //                                "/my-images/**",
@@ -28,8 +28,12 @@
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")
 //                        .anyRequest().authenticated()
 //                )
+//                .formLogin(login -> login
+//                        .loginPage("/Account/login")
+//                        .usernameParameter("email")
+//                        .passwordParameter("password")
+//                )
 //                .logout(logout -> logout.permitAll());
-//
 //        return http.build();
 //    }
 //
@@ -37,4 +41,6 @@
 //    public PasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
+//
+//
 //}

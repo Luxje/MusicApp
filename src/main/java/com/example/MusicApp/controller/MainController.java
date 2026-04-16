@@ -43,9 +43,9 @@ public class MainController {
     @GetMapping("/Home")
     public String home(HttpSession session, Model model) {
         String email = (String) session.getAttribute("email");
-        String displayName = accountService.findAccountByEmail(email).getUsername();
+//        String displayName = accountService.findAccountByEmail(email).getUsername();
         String artistName = req.getParameter("artistName");
-        model.addAttribute("displayName", displayName);
+//        model.addAttribute("displayName", displayName);
         model.addAttribute("trackList", trackRepository.findAll());
         req.setAttribute("lstArtist", artistService.getArtistByName(artistName));
         return "MainPage";
