@@ -1,13 +1,15 @@
 package com.example.MusicApp.controller;
 
-import com.example.MusicApp.entity.Album;
-import com.example.MusicApp.entity.Track;
+import com.example.MusicApp.dto.response.ApiResponse;
+import com.example.MusicApp.model.Album;
+import com.example.MusicApp.model.Track;
 import com.example.MusicApp.repository.TrackRepository;
 import com.example.MusicApp.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,8 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.List;
 
-@Controller
-@RequestMapping("/Music")
+@RestController
+@RequestMapping("/api/music")
+@RequiredArgsConstructor
 public class MainController {
 
     private final HttpServletRequest req;
@@ -29,17 +32,6 @@ public class MainController {
     private final AccountService accountService;
 
 
-    public MainController(HttpServletRequest req, HttpServletResponse resp, UserService userService, TrackService trackService, ArtistService artistService, TrackRepository trackRepository, AlbumService albumService, AccountService accountService) {
-        this.req = req;
-        this.resp = resp;
-        this.userService = userService;
-        this.trackService = trackService;
-        this.artistService = artistService;
-        this.trackRepository = trackRepository;
-        this.albumService = albumService;
-        this.accountService = accountService;
-    }
-
     @GetMapping("/Home")
     public String home(HttpSession session, Model model) {
         String email = (String) session.getAttribute("email");
@@ -49,6 +41,11 @@ public class MainController {
         model.addAttribute("trackList", trackRepository.findAll());
         req.setAttribute("lstArtist", artistService.getArtistByName(artistName));
         return "MainPage";
+    }
+
+    @GetMapping("/HomeApiCheck")
+    public ResponseEntity<ApiResponse<List<Track>>> getHomeData() {
+        return ResponseEntity.ok(ApiResponse.<>)
     }
 
 

@@ -1,7 +1,7 @@
 package com.example.MusicApp.repository;
 
 
-import com.example.MusicApp.entity.Artist;
+import com.example.MusicApp.model.Artist;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

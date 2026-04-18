@@ -1,8 +1,7 @@
 package com.example.MusicApp.service;
 
-import com.example.MusicApp.entity.Artist;
+import com.example.MusicApp.model.Artist;
 import com.example.MusicApp.repository.ArtistRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

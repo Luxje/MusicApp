@@ -1,12 +1,8 @@
 package com.example.MusicApp.controller;
 
 import com.example.MusicApp.accountCredentials.LoginCredentials;
-import com.example.MusicApp.accountCredentials.RegisterCredentials;
-import com.example.MusicApp.entity.Users;
 import com.example.MusicApp.service.AccountService;
 import com.example.MusicApp.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

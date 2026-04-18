@@ -1,6 +1,6 @@
 package com.example.MusicApp.repository;
 
-import com.example.MusicApp.entity.Users;
+import com.example.MusicApp.model.Users;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<Users, Integer> {

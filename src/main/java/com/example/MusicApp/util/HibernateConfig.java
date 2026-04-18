@@ -1,6 +1,6 @@
 package com.example.MusicApp.util;
 
-import com.example.MusicApp.entity.*;
+import com.example.MusicApp.model.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;

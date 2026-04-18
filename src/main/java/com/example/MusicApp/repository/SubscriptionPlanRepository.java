@@ -1,8 +1,7 @@
 package com.example.MusicApp.repository;
 
-import com.example.MusicApp.entity.SubscriptionPlan;
+import com.example.MusicApp.model.SubscriptionPlan;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 public interface SubscriptionPlanRepository extends CrudRepository<SubscriptionPlan, Integer> {
     public SubscriptionPlan findBySubscriptionPlanID(Integer id);

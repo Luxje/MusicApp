@@ -1,6 +1,6 @@
 package com.example.MusicApp.controller;
 
-import com.example.MusicApp.entity.Track;
+import com.example.MusicApp.model.Track;
 import com.example.MusicApp.repository.TrackRepository;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;

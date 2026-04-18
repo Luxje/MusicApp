@@ -1,6 +1,6 @@
 package com.example.MusicApp.repository;
 
-import com.example.MusicApp.entity.Album;
+import com.example.MusicApp.model.Album;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

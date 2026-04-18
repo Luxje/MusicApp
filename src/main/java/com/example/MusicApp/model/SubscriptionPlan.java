@@ -1,4 +1,4 @@
-package com.example.MusicApp.entity;
+package com.example.MusicApp.model;
 
 
 import jakarta.persistence.*;

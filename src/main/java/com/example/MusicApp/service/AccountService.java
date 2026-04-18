@@ -1,8 +1,6 @@
 package com.example.MusicApp.service;
 
-import com.example.MusicApp.accountCredentials.LoginCredentials;
-import com.example.MusicApp.accountCredentials.RegisterCredentials;
-import com.example.MusicApp.entity.Account;
+import com.example.MusicApp.model.Account;
 import com.example.MusicApp.repository.AccountRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

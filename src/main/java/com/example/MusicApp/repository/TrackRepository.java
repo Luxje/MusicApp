@@ -1,7 +1,6 @@
 package com.example.MusicApp.repository;
 
-import com.example.MusicApp.entity.Track;
-import org.springframework.data.jpa.repository.support.CrudMethodMetadata;
+import com.example.MusicApp.model.Track;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
