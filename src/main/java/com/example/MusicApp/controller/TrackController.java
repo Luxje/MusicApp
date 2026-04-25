@@ -2,15 +2,18 @@ package com.example.MusicApp.controller;
 
 import com.example.MusicApp.model.Track;
 import com.example.MusicApp.repository.TrackRepository;
+import com.example.MusicApp.service.TrackService;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @RestController // Use RestController for streaming data/files
 @RequestMapping("/api/tracks")
@@ -18,9 +21,11 @@ public class TrackController {
 
 
     private final TrackRepository trackRepository;
+    private final TrackService trackService;
 
-    public TrackController(TrackRepository trackRepository) {
+    public TrackController(TrackRepository trackRepository, TrackService trackService) {
         this.trackRepository = trackRepository;
+        this.trackService = trackService;
     }
 
     @GetMapping("/stream/{id}")
@@ -40,6 +45,17 @@ public class TrackController {
                 .body(resource);
     }
 
+//    @PostMapping("/upload")
+//    public ResponseEntity<Resource> uploadTrack(@RequestParam("file") MultipartFile file) {
+//
+//    }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Track>> searchTracks(@RequestParam String title) {
+        List<Track> lstTrack = trackService.getTrackByTitle(title);
+        return ResponseEntity.ok().body(lstTrack);
+    }
 
 
 

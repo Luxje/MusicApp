@@ -43,11 +43,6 @@ public class MainController {
         return "MainPage";
     }
 
-//    @GetMapping("/HomeApiCheck")
-//    public ResponseEntity<ApiResponse<List<Track>>> getHomeData() {
-//        return ResponseEntity.ok(ApiResponse.<>)
-//    }
-
 
 //    @GetMapping("/Search")
 //    public String search(Model model, @RequestParam("searchInput") String searchInput) {
