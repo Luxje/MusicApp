@@ -43,27 +43,27 @@ public class MainController {
         return "MainPage";
     }
 
-    @GetMapping("/HomeApiCheck")
-    public ResponseEntity<ApiResponse<List<Track>>> getHomeData() {
-        return ResponseEntity.ok(ApiResponse.<>)
-    }
+//    @GetMapping("/HomeApiCheck")
+//    public ResponseEntity<ApiResponse<List<Track>>> getHomeData() {
+//        return ResponseEntity.ok(ApiResponse.<>)
+//    }
 
 
-    @GetMapping("/Search")
-    public String search(Model model, @RequestParam("searchInput") String searchInput) {
-        List<Track> lstTrack = trackService.getTrackByTitle(searchInput);
-        List<Album> lstAlbum1 = albumService.findByArtistName(searchInput);
-        List<Album> lstAlbum2 = albumService.findByAlbumTitle(searchInput);
-        if (lstTrack.isEmpty() && lstAlbum1.isEmpty() && lstAlbum2.isEmpty()) { // empty or not.
-            model.addAttribute("message", "No tracks or albums found");
-        }else {
-        // merge lstAlbum1 into lstAlbum2.
-            lstAlbum1.addAll(lstAlbum2);
-            model.addAttribute("trackList", lstTrack);
-            model.addAttribute("albumList", lstAlbum1);
-        }
-        return "MainPage";
-    }
+//    @GetMapping("/Search")
+//    public String search(Model model, @RequestParam("searchInput") String searchInput) {
+//        List<Track> lstTrack = trackService.getTrackByTitle(searchInput);
+//        List<Album> lstAlbum1 = albumService.findByArtistName(searchInput);
+//        List<Album> lstAlbum2 = albumService.findByAlbumTitle(searchInput);
+//        if (lstTrack.isEmpty() && lstAlbum1.isEmpty() && lstAlbum2.isEmpty()) { // empty or not.
+//            model.addAttribute("message", "No tracks or albums found");
+//        }else {
+//        // merge lstAlbum1 into lstAlbum2.
+//            lstAlbum1.addAll(lstAlbum2);
+//            model.addAttribute("trackList", lstTrack);
+//            model.addAttribute("albumList", lstAlbum1);
+//        }
+//        return "MainPage";
+//    }
 
 
     @GetMapping("/upload")
